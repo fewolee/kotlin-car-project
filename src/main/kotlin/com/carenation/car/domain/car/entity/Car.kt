@@ -22,7 +22,7 @@ data class Car(
     @Column(nullable = false)
     var rentAvailable: Boolean, // 대여가능여부
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     val categories : Set<CarCategory> // 자동차 카테고리
 
