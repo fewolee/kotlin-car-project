@@ -1,6 +1,6 @@
 package com.carenation.car.domain.car.entity
 
-import com.carenation.car.domain.category.entity.CarCategory
+import com.carenation.car.domain.car.enum.CarCategory
 import jakarta.persistence.*
 
 @Entity
@@ -8,17 +8,22 @@ import jakarta.persistence.*
 data class Car(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Long? = null, // pk
 
     @Column(nullable = false)
-    val name: String,
+    var modelName: String , // 모델명
 
     @Column(nullable = false)
-    val model: String,
+    var manufacture: String, // 제조사
 
     @Column(nullable = false)
-    val rentAvailable: Boolean,
+    var productionYear : Int, //생산년도
 
-    @OneToMany(mappedBy = "car", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val carCategories: MutableList<CarCategory> = mutableListOf()
+    @Column(nullable = false)
+    var rentAvailable: Boolean, // 대여가능여부
+
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    val categories : Set<CarCategory> // 자동차 카테고리
+
 )
