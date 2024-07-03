@@ -21,7 +21,7 @@ class CarService(
 
     // 모든 자동차 조회
     fun getAllCars(): List<Car> {
-        return carRepository.getAllCars()
+        return carRepository.findAll()
     }
 
     // 카테고리로 자동차 조회
@@ -30,8 +30,9 @@ class CarService(
     }
 
     // 자동차 대여 가능 여부 조회
-    fun isCarAvailable(carId: Long): Boolean {
-        return carRepository.isRentAvailable(carId)
+    fun rentAvailable(carId: Long): Boolean {
+        val car = carRepository.findById(carId).orElseThrow()
+        return car.rentAvailable
     }
     // 제조사, 모델명, 생산년도로 자동차 조회
     fun getCarsByManufactureModelNameProductionYear(manufacture: String, modelName: String, productionYear: Int): List<Car> {
