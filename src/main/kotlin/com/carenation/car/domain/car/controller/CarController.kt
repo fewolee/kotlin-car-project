@@ -1,21 +1,26 @@
 package com.carenation.car.domain.car.controller
 
+import com.carenation.car.domain.car.dto.RegisterCarDto
 import com.carenation.car.domain.car.entity.Car
-import com.carenation.car.domain.car.enum.CarCategory
 import com.carenation.car.domain.car.service.CarService
+import com.carenation.car.domain.category.service.CategoryService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/cars")
 class CarController(
-    private val carService: CarService
+    private val carService: CarService,
+    private val categoryService : CategoryService
 ) {
-    // 자동차 등록
+    //자동차 등록
     @PostMapping
-    fun registerCar(@RequestBody car: Car): ResponseEntity<Car> {
-        return ResponseEntity.ok(carService.registerCar(car))
+    fun registerCar(@RequestBody request: RegisterCarDto): ResponseEntity<Car> {
+        return ResponseEntity(carService.registerCar(request),
+            HttpStatus.CREATED)
     }
+
     //자동차 id로 조회
     @GetMapping("/{id}")
     fun getCarById(@PathVariable id: Long): ResponseEntity<Car> {
@@ -29,9 +34,9 @@ class CarController(
     }
 
     //카테고리로 자동차 조회
-    @GetMapping("/categories/{category}")
-    fun getCarsByCategory(@PathVariable category: CarCategory): ResponseEntity<List<Car>> {
-        return ResponseEntity.ok(carService.getCarsByCategory(category))
+    @GetMapping("/{category}")
+    fun getCarsByCategory(@PathVariable categoryName: String): ResponseEntity<List<Car>> {
+        return ResponseEntity.ok(categoryService.getCarsByCategoryName(categoryName))
     }
 
    //자동차 대여 가능 여부 조회
@@ -50,9 +55,4 @@ class CarController(
         return ResponseEntity.ok(carService.getCarsByManufactureModelNameProductionYear(manufacture, modelName, productionYear))
     }
 
-
-    @PutMapping("/{id}")
-    fun updateCar(@PathVariable id: Long, @RequestBody updatedCar: Car): ResponseEntity<Car> {
-        return ResponseEntity.ok(carService.updateCar(id, updatedCar))
-    }
 }
