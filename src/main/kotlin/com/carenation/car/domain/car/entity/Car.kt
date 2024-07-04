@@ -1,6 +1,6 @@
 package com.carenation.car.domain.car.entity
 
-import com.carenation.car.domain.car.enum.CarCategory
+import com.carenation.car.domain.category.entity.CarCategory
 import jakarta.persistence.*
 
 @Entity
@@ -22,8 +22,9 @@ data class Car(
     @Column(nullable = false)
     var rentAvailable: Boolean, // 대여가능여부
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    val categories : Set<CarCategory> // 자동차 카테고리
-
 )
+
+
+
+//    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+//    val carCategories: MutableSet<CarCategory> = mutableSetOf()
