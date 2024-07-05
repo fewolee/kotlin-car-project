@@ -1,19 +1,20 @@
 package com.carenation.car.domain.category.entity
 
-import com.carenation.car.domain.car.entity.Car
+import com.carenation.car.domain.car.entity.CarEntity
 import jakarta.persistence.*
 
 @Entity
-data class CarCategory(
+@Table(name = "car_category")
+data class CarCategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_id")
-    val car: Car,
+    @ManyToOne(fetch = FetchType.LAZY,cascade = [CascadeType.ALL])
+    @JoinColumn(name = "car_id", nullable = false)
+    val carEntity: CarEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    val category: Category
+    @JoinColumn(name = "category_id", nullable = false)
+    val categoryEntity: CategoryEntity
 )
