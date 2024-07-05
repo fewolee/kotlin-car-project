@@ -1,7 +1,10 @@
 package com.carenation.car.domain.category.entity
+
 import jakarta.persistence.*
+
 @Entity
-data class Category(
+@Table(name = "category")
+data class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
@@ -9,6 +12,6 @@ data class Category(
     @Column(nullable = false)
     val categoryName: String,
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-    val carCategories: MutableSet<CarCategory> = mutableSetOf()
+    @OneToMany(mappedBy = "categoryEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val carCategories: MutableSet<CarCategoryEntity> = mutableSetOf()
 )

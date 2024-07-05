@@ -1,11 +1,11 @@
 package com.carenation.car.domain.car.entity
 
-import com.carenation.car.domain.category.entity.CarCategory
+import com.carenation.car.domain.category.entity.CarCategoryEntity
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "car")
-data class Car(
+data class CarEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null, // pk
@@ -22,9 +22,8 @@ data class Car(
     @Column(nullable = false)
     var rentAvailable: Boolean, // 대여가능여부
 
+
+    @OneToMany(mappedBy = "carEntity", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    val carCategories: MutableSet<CarCategoryEntity> = mutableSetOf()
+
 )
-
-
-
-//    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-//    val carCategories: MutableSet<CarCategory> = mutableSetOf()
