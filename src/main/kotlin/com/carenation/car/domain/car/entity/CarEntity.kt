@@ -22,7 +22,6 @@ data class CarEntity(
     @Column(nullable = false)
     var rentAvailable: Boolean, // 대여가능여부
 
-
     @OneToMany(mappedBy = "carEntity", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     val carCategories: MutableSet<CarCategoryEntity> = mutableSetOf()
 

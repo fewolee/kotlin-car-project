@@ -2,7 +2,6 @@ package com.carenation.car.domain.car.controller
 
 import com.carenation.car.domain.car.dto.*
 import com.carenation.car.domain.car.service.*
-import com.carenation.car.domain.category.service.CategoryReadServiceBus
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,8 +12,7 @@ class CarController(
     private val carCreateService: CarCreateServiceBus,
     private val carDeleteService: CarDeleteServiceBus,
     private val carReadService: CarReadServiceBus,
-    private val carUpdateService: CarUpdateServiceBus,
-    private val categoryReadService: CategoryReadServiceBus
+    private val carUpdateService: CarUpdateServiceBus
 ) {
     //자동차 등록
     @PostMapping
@@ -31,6 +29,7 @@ class CarController(
 
     }
 
+    // 자동차 삭제
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id : Long) : Unit {
         carDeleteService.delete(id)
@@ -52,7 +51,7 @@ class CarController(
     //카테고리로 자동차 조회
     @GetMapping("/category/{category}")
     fun getByCategory(@PathVariable category: String): ResponseEntity<List<CarInfoDto>> {
-        return ResponseEntity.ok(categoryReadService.getByCategoryName(category))
+        return ResponseEntity.ok(carReadService.getByCategoryName(category))
     }
 
     //자동차 대여 가능 여부 조회
