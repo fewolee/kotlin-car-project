@@ -6,8 +6,16 @@ plugins {
     kotlin("plugin.spring") version "1.9.24"
     //querydsl
     kotlin("kapt") version "1.7.10"
+
     idea
 }
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.persistence.MappedSuperclass")
+}
+
 
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
@@ -36,45 +44,21 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     // QueryDSL 의존성 추가
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    implementation("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    implementation("jakarta.persistence:jakarta.persistence-api")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
-    kapt("jakarta.annotation:jakarta.annotation-api")
-    kapt("jakarta.persistence:jakarta.persistence-api")
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
+    // swagger 추가
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.8")
 
-}
-// Querydsl 설정부 추가 - start
-val generated = file("src/main/generated")
 
-// querydsl QClass 파일 생성 위치를 지정
-tasks.withType<JavaCompile> {
-    options.generatedSourceOutputDirectory.set(generated)
-}
-
-// kotlin source set 에 querydsl QClass 위치 추가
-sourceSets {
-    main {
-        kotlin.srcDirs += generated
-    }
-}
-
-// gradle clean 시에 QClass 디렉토리 삭제
-tasks.named("clean") {
-    doLast {
-        generated.deleteRecursively()
-    }
 }
 
 
-kapt {
-    generateStubs = true
-}
-
-// Querydsl 설정부 추가 - end
-
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict")
-    }
-}
 
 
 tasks.withType<Test> {

@@ -10,14 +10,15 @@ import com.carenation.car.domain.category.repository.CategoryRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
-@Transactional
 @Service
 class CarCreateService (
     private val carRepository: CarRepository,
     private val categoryRepository: CategoryRepository,
     private val carCategoryRepository: CarCategoryRepository
 ): CarCreateServiceBus{
+
     // 자동차 등록
+    @Transactional
     override fun register(
         registerCarDto: RegisterCarDto
     ): RegisteredCarDto {
