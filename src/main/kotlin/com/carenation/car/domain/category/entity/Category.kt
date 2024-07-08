@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "category")
-data class CategoryEntity(
+class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
@@ -12,6 +12,7 @@ data class CategoryEntity(
     @Column(nullable = false)
     val categoryName: String,
 
-    @OneToMany(mappedBy = "categoryEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val carCategories: MutableSet<CarCategoryEntity> = mutableSetOf()
+//    @OneToMany(mappedBy = "categoryEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
+//    val carCategories: MutableSet<CarCategoryEntity> = mutableSetOf()
+
 )

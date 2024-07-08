@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 
-@Transactional
 @Service
 class CarUpdateService(
     private val carRepository: CarRepository,
@@ -18,6 +17,7 @@ class CarUpdateService(
     private val carCategoryRepository: CarCategoryRepository
 ) : CarUpdateServiceBus {
 
+    @Transactional
     override fun update(id: Long, updateCarDto: UpdateCarDto): UpdatedCarDto {
         var carEntity = carRepository.findById(id).orElseThrow { IllegalArgumentException("해당하는 자동차 ID가 없습니다: $id") }
         carEntity.modelName = updateCarDto.modelName
@@ -34,6 +34,7 @@ class CarUpdateService(
             carCategoryRepository.save(carCategoryEntity)
             categoryNames.add(categoryName)
         }
+
         return UpdatedCarDto(
             modelName = updatedCar.modelName,
             manufacture = updatedCar.manufacture,

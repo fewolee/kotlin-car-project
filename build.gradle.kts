@@ -39,6 +39,11 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
+    // swagger 추가
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.8")
+
 
 }
 // Querydsl 설정부 추가 - start

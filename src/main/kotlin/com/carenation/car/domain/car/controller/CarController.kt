@@ -17,8 +17,7 @@ class CarController(
     //자동차 등록
     @PostMapping
     fun register(@RequestBody registerCarDto: RegisterCarDto): ResponseEntity<RegisteredCarDto> {
-        return ResponseEntity(carCreateService.register(registerCarDto),
-            HttpStatus.CREATED)
+        return ResponseEntity(carCreateService.register(registerCarDto), HttpStatus.CREATED)
     }
 
     // 자동차 수정
@@ -47,6 +46,12 @@ class CarController(
         return ResponseEntity.ok(carReadService.getAll())
     }
 
+    //자동차 대여 가능 여부 조회
+    @GetMapping("/{id}/available")
+    fun isCarAvailable(@PathVariable id: Long): ResponseEntity<Boolean> {
+        return ResponseEntity.ok(carReadService.rentAvailable(id))
+    }
+
 
     //카테고리로 자동차 조회
     @GetMapping("/category/{category}")
@@ -54,11 +59,7 @@ class CarController(
         return ResponseEntity.ok(carReadService.getByCategoryName(category))
     }
 
-    //자동차 대여 가능 여부 조회
-    @GetMapping("/{id}/available")
-    fun isCarAvailable(@PathVariable id: Long): ResponseEntity<Boolean> {
-        return ResponseEntity.ok(carReadService.rentAvailable(id))
-    }
+
 
     //제조사, 모델명, 생산년도로 자동차 조회
     @GetMapping("/detail")
