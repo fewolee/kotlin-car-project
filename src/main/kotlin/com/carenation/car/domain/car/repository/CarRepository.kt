@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CarRepository : JpaRepository<CarEntity, Long> {
+interface CarRepository : JpaRepository<CarEntity, Long> ,CarQuerydslRepository{
     fun findByManufactureAndModelNameAndProductionYear(manufacture: String, modelName: String, productionYear: Int): List<CarEntity>
     // 제조사, 모델명, 생산년도로 검색
 

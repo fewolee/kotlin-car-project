@@ -1,9 +1,13 @@
 package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.dto.CarInfoDto
+import com.carenation.car.domain.car.entity.QCarEntity
+import com.carenation.car.domain.car.entity.QCarEntity.carEntity
+import com.carenation.car.domain.car.repository.CarQuerydslRepository
 import com.carenation.car.domain.car.repository.CarRepository
 import com.carenation.car.domain.category.repository.CarCategoryRepository
 import com.carenation.car.domain.category.repository.CategoryRepository
+import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -11,8 +15,15 @@ import org.springframework.stereotype.Service
 class CarReadService(
     private val carRepository: CarRepository,
     private val categoryRepository: CategoryRepository,
-    private val carCategoryRepository: CarCategoryRepository
-) : CarReadServiceBus{
+    private val carCategoryRepository: CarCategoryRepository,
+) : CarReadServiceBus, CarQuerydslRepository{
+     //id로 자동차 조회
+    @Transactional
+    override fun findByCustomId(carId: Long): CarInfoDto {
+
+        return carRepository.findByCustomId(carId)
+
+    }
 
     // id로 자동차 조회
     @Transactional

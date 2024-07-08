@@ -5,5 +5,5 @@ data class CarInfoDto (
     val manufacture: String,
     val productionYear: Int,
     val rentAvailable: Boolean,
-    val categoryNames: List<String>
+    val categoryNames: List<String>?
 )
