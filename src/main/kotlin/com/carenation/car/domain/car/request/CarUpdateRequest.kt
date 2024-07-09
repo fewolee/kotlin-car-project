@@ -1,7 +1,6 @@
-package com.carenation.car.domain.car.dto
+package com.carenation.car.domain.car.request
 
-data class UpdateCarDto (
-    val id : Long,
+data class CarUpdateRequest(
     val modelName: String,
     val manufacture: String,
     val productionYear: Int,

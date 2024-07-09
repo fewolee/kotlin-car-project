@@ -23,7 +23,6 @@ class CarQuerydslRepositoryImpl(
 //
 
     // id로 자동차 조회
-    @Transactional
     override fun getById(carId: Long): CarInfoDto {
 
         return queryFactory.select(
@@ -43,7 +42,6 @@ class CarQuerydslRepositoryImpl(
     }
 
     // 모든 자동차 조회
-    @Transactional
     override fun getAll(): List<CarInfoDto> {
         return queryFactory.select(
             Projections.constructor(
@@ -59,7 +57,6 @@ class CarQuerydslRepositoryImpl(
     }
 
     //카테고리 이름으로 자동차 조회
-    @Transactional
     override fun getByCategoryName(category: String): List<CarInfoDto> {
         val categoryEntity = categoryRepository.findByCategoryName(category)
             ?: throw IllegalArgumentException("카테고리 이름이 없습니다: $category")
@@ -81,7 +78,6 @@ class CarQuerydslRepositoryImpl(
 
 
     // 모델명, 제조사, 생산년도로 자동차 초회하는 동적 쿼리 메서드
-    @Transactional
     override fun getDynamicQuery(modelName: String?, manufacture: String?, productionYear: Int?): List<CarInfoDto> {
         return queryFactory.select(
             Projections.constructor(
@@ -101,20 +97,17 @@ class CarQuerydslRepositoryImpl(
 
 
     // 모델명이 같은지 확인
-    @Transactional
-    override fun eqModelName(modelName: String?): BooleanExpression? {
+    private fun eqModelName(modelName: String?): BooleanExpression? {
         return if (StringUtils.isNullOrEmpty(modelName)) null else carEntity.modelName.eq(modelName)
     }
 
     // 제조사가 같은지 확인
-    @Transactional
-    override fun eqManufacture(manufacture: String?): BooleanExpression? {
+    private fun eqManufacture(manufacture: String?): BooleanExpression? {
         return if (StringUtils.isNullOrEmpty(manufacture)) null else carEntity.manufacture.eq(manufacture)
     }
 
     // 생산년도가 같은지 확인
-    @Transactional
-    override fun eqProductionYear(productionYear: Int?): BooleanExpression? {
+    private fun eqProductionYear(productionYear: Int?): BooleanExpression? {
         return if (productionYear == null ) null else carEntity.productionYear.eq(productionYear)
     }
 

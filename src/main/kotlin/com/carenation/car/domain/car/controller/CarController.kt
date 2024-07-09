@@ -2,6 +2,7 @@ package com.carenation.car.domain.car.controller
 
 import com.carenation.car.domain.car.dto.*
 import com.carenation.car.domain.car.repository.CarQuerydslRepository
+import com.carenation.car.domain.car.request.CarUpdateRequest
 import com.carenation.car.domain.car.service.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,14 +20,23 @@ class CarController(
     //자동차 등록
     @PostMapping
     fun register(@RequestBody registerCarDto: RegisterCarDto): ResponseEntity<RegisteredCarDto> {
+
         return ResponseEntity(carCreateServiceImpl.register(registerCarDto), HttpStatus.CREATED)
     }
 
     // 자동차 수정
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long,@RequestBody updateCarDto: UpdateCarDto): ResponseEntity<UpdatedCarDto> {
+    fun update(@PathVariable id: Long,@RequestBody req: CarUpdateRequest): ResponseEntity<UpdatedCarDto> {
 
-        return ResponseEntity.ok(carUpdateServiceImpl.update(id, updateCarDto))
+        val updateCarDto = UpdateCarDto(
+            id=id,
+            modelName = req.modelName,
+            manufacture = req.manufacture,
+            productionYear = req.productionYear,
+            rentAvailable = req.rentAvailable,
+            categoryNames = req.categoryNames,
+            )
+        return ResponseEntity.ok(carUpdateServiceImpl.update(updateCarDto))
 
     }
 

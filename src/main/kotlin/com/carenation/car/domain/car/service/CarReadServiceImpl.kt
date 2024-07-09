@@ -1,17 +1,14 @@
 package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.dto.CarInfoDto
-import com.carenation.car.domain.car.entity.QCarEntity.carEntity
 import com.carenation.car.domain.car.repository.CarRepository
-import com.carenation.car.domain.category.entity.QCarCategoryEntity.carCategoryEntity
-import com.querydsl.core.types.Projections
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
 class CarReadServiceImpl(
     private val carRepository: CarRepository,
-): CarReadService{
+) : CarReadService {
 
     @Transactional
     override fun getById(carId: Long): CarInfoDto {
@@ -27,12 +24,12 @@ class CarReadServiceImpl(
     //카테고리 이름으로 자동차 조회
     @Transactional
     override fun getByCategoryName(category: String): List<CarInfoDto> {
-        return  carRepository.getByCategoryName(category)
+        return carRepository.getByCategoryName(category)
     }
 
     @Transactional
     override fun getDynamicQuery(modelName: String?, manufacture: String?, productionYear: Int?): List<CarInfoDto> {
-        return carRepository.getDynamicQuery(modelName , manufacture, productionYear)
+        return carRepository.getDynamicQuery(modelName, manufacture, productionYear)
     }
 
 

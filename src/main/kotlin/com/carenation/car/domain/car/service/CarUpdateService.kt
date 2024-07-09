@@ -5,5 +5,5 @@ import com.carenation.car.domain.car.dto.UpdateCarDto
 import com.carenation.car.domain.car.dto.UpdatedCarDto
 
 interface CarUpdateService {
-    fun update(id : Long, updateCarDto: UpdateCarDto): UpdatedCarDto
+    fun update(updateCarDto: UpdateCarDto): UpdatedCarDto
 }

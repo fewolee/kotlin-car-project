@@ -2,6 +2,8 @@ package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.dto.UpdateCarDto
 import com.carenation.car.domain.car.dto.UpdatedCarDto
+import com.carenation.car.domain.car.entity.CarEntity
+import com.carenation.car.domain.car.entity.QCarEntity.carEntity
 import com.carenation.car.domain.car.repository.CarRepository
 import com.carenation.car.domain.category.entity.CarCategoryEntity
 import com.carenation.car.domain.category.repository.CarCategoryRepository
@@ -18,33 +20,44 @@ class CarUpdateServiceImpl(
 ) : CarUpdateService {
 
     @Transactional
-    override fun update(id: Long, updateCarDto: UpdateCarDto): UpdatedCarDto {
-        var carEntity = carRepository.findById(id).orElseThrow { IllegalArgumentException("해당하는 자동차 ID가 없습니다: $id") }
+    override fun update(updateCarDto: UpdateCarDto): UpdatedCarDto {
+        // carEntity 수정
+        val updatedCarEntity = updateCarEntity(updateCarDto)
+
+        return UpdatedCarDto(
+            modelName = updatedCarEntity.modelName,
+            manufacture = updatedCarEntity.manufacture,
+            productionYear = updatedCarEntity.productionYear,
+            rentAvailable = updatedCarEntity.rentAvailable,
+            categoryNames = updateCarCategoryEntity(updateCarDto, updatedCarEntity)
+        )
+    }
+
+    // carEntity 업데이트
+    private fun updateCarEntity(updateCarDto: UpdateCarDto): CarEntity {
+        val carEntity = carRepository.findById(updateCarDto.id)
+            .orElseThrow { IllegalArgumentException("해당하는 자동차 ID가 없습니다: ${updateCarDto.id}") }
         carEntity.modelName = updateCarDto.modelName
         carEntity.manufacture = updateCarDto.manufacture
         carEntity.rentAvailable = updateCarDto.rentAvailable
         carEntity.productionYear = updateCarDto.productionYear
+        return carRepository.save(carEntity)
+    }
 
-        var updatedCar = carRepository.save(carEntity)
+
+    // carCategoryEntity 업데이트
+    private fun updateCarCategoryEntity(updateCarDto: UpdateCarDto, updatedCarEntity: CarEntity): List<String> {
         val categoryNames = mutableListOf<String>()
+        carCategoryRepository.deleteByCarEntity(updatedCarEntity)
 
-        carCategoryRepository.deleteByCarEntity(carEntity)
 
         updateCarDto.categoryNames.forEach() { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
-            val carCategoryEntity = CarCategoryEntity(carEntity = updatedCar, categoryEntity = category)
+            val carCategoryEntity = CarCategoryEntity(carEntity = updatedCarEntity, categoryEntity = category)
             carCategoryRepository.save(carCategoryEntity)
             categoryNames.add(categoryName)
         }
-
-        return UpdatedCarDto(
-            modelName = updatedCar.modelName,
-            manufacture = updatedCar.manufacture,
-            productionYear = updatedCar.productionYear,
-            rentAvailable = updatedCar.rentAvailable,
-            categoryNames = categoryNames
-        )
-
+        return categoryNames
     }
 
 }

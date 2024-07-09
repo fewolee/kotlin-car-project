@@ -22,6 +22,7 @@ class CarCreateServiceImpl (
     override fun register(
         registerCarDto: RegisterCarDto
     ): RegisteredCarDto {
+        // 영속화 목적 entity로 변환
         var carEntity = CarEntity(
             modelName = registerCarDto.modelName,
             manufacture = registerCarDto.manufacture,
@@ -29,9 +30,11 @@ class CarCreateServiceImpl (
             rentAvailable = registerCarDto.rentAvailable
         )
 
+        // 영속화
         val savedCar = carRepository.save(carEntity)
+        
+        // 카테고리 영속화
         val categoryNames = mutableListOf<String>()
-
         registerCarDto.categoryNames.forEach() { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
             val carCategoryEntity = CarCategoryEntity(carEntity = savedCar, categoryEntity = category)
