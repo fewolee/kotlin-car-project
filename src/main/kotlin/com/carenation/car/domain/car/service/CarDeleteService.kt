@@ -15,8 +15,5 @@ class CarDeleteService(
 
         carRepository.deleteById(carId)
 
-//        val data = carRepository.findById(carId).get()
-//        carRepository.delete(data)
-
     }
 }

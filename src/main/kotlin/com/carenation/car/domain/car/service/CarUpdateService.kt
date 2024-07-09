@@ -28,6 +28,8 @@ class CarUpdateService(
         var updatedCar = carRepository.save(carEntity)
         val categoryNames = mutableListOf<String>()
 
+        carCategoryRepository.deleteByCarEntity(carEntity)
+
         updateCarDto.categoryNames.forEach() { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
             val carCategoryEntity = CarCategoryEntity(carEntity = updatedCar, categoryEntity = category)
