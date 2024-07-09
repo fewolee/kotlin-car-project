@@ -1,9 +1,7 @@
-package com.carenation.car.domain.car.service
+package com.carenation.car.domain.car.repository
 
 import com.carenation.car.domain.car.dto.CarInfoDto
-import com.carenation.car.domain.car.entity.CarEntity
 import com.carenation.car.domain.car.entity.QCarEntity.carEntity
-import com.carenation.car.domain.car.repository.CarRepository
 import com.carenation.car.domain.category.entity.QCarCategoryEntity.carCategoryEntity
 import com.carenation.car.domain.category.repository.CategoryRepository
 import com.querydsl.core.types.Projections
@@ -13,11 +11,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
+
 @Service
-class CarReadServiceBusImpl(
+class CarQuerydslRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
     private val categoryRepository: CategoryRepository
-) : CarReadServiceBus {
+) : CarQuerydslRepository {
 
 //    @Autowired
 //    lateinit var queryFactory: JPAQueryFactory
@@ -121,8 +120,4 @@ class CarReadServiceBusImpl(
 
 
 }
-
-
-
-
 
