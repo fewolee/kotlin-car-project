@@ -34,12 +34,15 @@ class CarUpdateServiceImpl(
 
     // carEntity 업데이트
     private fun updateCarEntity(updateCarDto: UpdateCarDto): CarEntity {
+
         val car = carRepository.findById(updateCarDto.id)
             .orElseThrow { IllegalArgumentException("해당하는 자동차 ID가 없습니다: ${updateCarDto.id}") }
-        car.modelName = updateCarDto.modelName
-        car.manufacture = updateCarDto.manufacture
-        car.rentAvailable = updateCarDto.rentAvailable
-        car.productionYear = updateCarDto.productionYear
+
+        car.updateInfo(modelName = updateCarDto.modelName,
+                        manufacture = updateCarDto.manufacture,
+                        productionYear = updateCarDto.productionYear,
+                         rentAvailable = updateCarDto.rentAvailable)
+
         return carRepository.save(car)
     }
 
@@ -48,7 +51,6 @@ class CarUpdateServiceImpl(
     private fun updateCarCategoryEntity(updateCarDto: UpdateCarDto, updatedCar: CarEntity): List<String> {
         val categoryNames = mutableListOf<String>()
         carCategoryRepository.deleteByCarId(updateCarDto.id)
-
 
         updateCarDto.categoryNames.forEach() { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)

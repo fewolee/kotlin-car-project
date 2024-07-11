@@ -2,6 +2,7 @@ package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.dto.CarInfoDto
 import com.carenation.car.domain.car.repository.CarRepository
+import com.carenation.car.domain.car.request.CarInfoListRequest
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -29,8 +30,8 @@ class CarReadServiceImpl(
 
 
     @Transactional
-    override fun getDynamicQuery(modelName: String?, manufacture: String?, productionYear: Int?): List<CarInfoDto> {
-        return carRepository.getDynamicQuery(modelName, manufacture, productionYear)
+    override fun getDynamicQuery(req: CarInfoListRequest): List<CarInfoDto> {
+        return carRepository.getDynamicQuery(req)
     }
 
 

@@ -2,6 +2,7 @@ package com.carenation.car.domain.car.repository
 
 import com.carenation.car.domain.car.dto.CarInfoDto
 import com.carenation.car.domain.car.entity.QCarEntity.carEntity
+import com.carenation.car.domain.car.request.CarInfoListRequest
 import com.carenation.car.domain.category.entity.QCarCategoryEntity.carCategoryEntity
 import com.carenation.car.domain.category.repository.CategoryRepository
 import com.querydsl.core.types.Projections
@@ -78,7 +79,7 @@ class CarQuerydslRepositoryImpl(
 
 
     // 모델명, 제조사, 생산년도로 자동차 초회하는 동적 쿼리 메서드
-    override fun getDynamicQuery(modelName: String?, manufacture: String?, productionYear: Int?): List<CarInfoDto> {
+        override fun getDynamicQuery(req: CarInfoListRequest): List<CarInfoDto> {
         return queryFactory.select(
             Projections.constructor(
                 CarInfoDto::class.java,
@@ -89,9 +90,9 @@ class CarQuerydslRepositoryImpl(
             )
         )
             .from(carEntity)
-            .where(eqModelName(modelName),
-                eqManufacture(manufacture),
-                eqProductionYear(productionYear))
+            .where(eqModelName(req.modelName),
+                eqManufacture(req.manufacture),
+                eqProductionYear(req.productionYear))
             .fetch()
     }
 
