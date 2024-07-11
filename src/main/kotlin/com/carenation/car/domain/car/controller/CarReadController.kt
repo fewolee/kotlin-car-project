@@ -1,6 +1,7 @@
 package com.carenation.car.domain.car.controller
 
 import com.carenation.car.domain.car.dto.CarInfoDto
+import com.carenation.car.domain.car.request.CarInfoListRequest
 import com.carenation.car.domain.car.service.CarReadService
 import jakarta.validation.constraints.NotNull
 import org.springframework.http.ResponseEntity
@@ -38,12 +39,8 @@ class CarReadController (
 
     //제조사, 모델명, 생산년도로 자동차 조회
     @GetMapping("/")
-    fun getByDynamicQuery(
-        @RequestParam modelName: String?,
-        @RequestParam manufacture: String?,
-        @RequestParam productionYear: Int?
-    ): ResponseEntity<List<CarInfoDto>> {
-        return ResponseEntity.ok(carReadServiceImpl.getDynamicQuery(modelName, manufacture, productionYear))
+    fun getByDynamicQuery(@ModelAttribute req: CarInfoListRequest): ResponseEntity<List<CarInfoDto>> {
+        return ResponseEntity.ok(carReadServiceImpl.getDynamicQuery(req))
     }
 
 }

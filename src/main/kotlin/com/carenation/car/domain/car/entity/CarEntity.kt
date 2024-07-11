@@ -21,8 +21,16 @@ class CarEntity(
 
     @Column(nullable = false)
     var rentAvailable: Boolean, // 대여가능여부
-//
+
 //    @OneToMany(mappedBy = "carEntity", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
 //    var carCategories: MutableList<CarCategoryEntity> = mutableListOf()
 
-)
+) {
+     fun updateInfo(modelName: String, manufacture: String, productionYear: Int, rentAvailable: Boolean) {
+        this.modelName = modelName
+        this.manufacture = manufacture
+        this.rentAvailable = rentAvailable
+        this.productionYear = productionYear
+    }
+}
+

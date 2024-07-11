@@ -3,6 +3,7 @@ package com.carenation.car.domain.car.service
 import com.carenation.car.domain.car.dto.UpdateCarDto
 import com.carenation.car.domain.car.dto.UpdatedCarDto
 import com.carenation.car.domain.car.entity.CarEntity
+import com.carenation.car.domain.car.mapper.CarMapper
 import com.carenation.car.domain.car.repository.CarRepository
 import com.carenation.car.domain.category.entity.CarCategoryEntity
 import com.carenation.car.domain.category.repository.CarCategoryRepository
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service
 class CarUpdateServiceImpl(
     private val carRepository: CarRepository,
     private val categoryRepository: CategoryRepository,
-    private val carCategoryRepository: CarCategoryRepository
+    private val carCategoryRepository: CarCategoryRepository,
+    private val carMapper : CarMapper
 ) : CarUpdateService {
 
     @Transactional
@@ -23,23 +25,28 @@ class CarUpdateServiceImpl(
         // carEntity 수정
         val updatedCar = updateCarEntity(updateCarDto)
 
-        return UpdatedCarDto(
-            modelName = updatedCar.modelName,
-            manufacture = updatedCar.manufacture,
-            productionYear = updatedCar.productionYear,
-            rentAvailable = updatedCar.rentAvailable,
-            categoryNames = updateCarCategoryEntity(updateCarDto, updatedCar)
-        )
+        return carMapper.toUpdatedCarDto(updatedCar,updateCarCategoryEntity(updateCarDto, updatedCar))
+
+//        return UpdatedCarDto(
+//            modelName = updatedCar.modelName,
+//            manufacture = updatedCar.manufacture,
+//            productionYear = updatedCar.productionYear,
+//            rentAvailable = updatedCar.rentAvailable,
+//            categoryNames = updateCarCategoryEntity(updateCarDto, updatedCar)
+//        )
     }
 
     // carEntity 업데이트
     private fun updateCarEntity(updateCarDto: UpdateCarDto): CarEntity {
+
         val car = carRepository.findById(updateCarDto.id)
             .orElseThrow { IllegalArgumentException("해당하는 자동차 ID가 없습니다: ${updateCarDto.id}") }
-        car.modelName = updateCarDto.modelName
-        car.manufacture = updateCarDto.manufacture
-        car.rentAvailable = updateCarDto.rentAvailable
-        car.productionYear = updateCarDto.productionYear
+
+        car.updateInfo(modelName = updateCarDto.modelName,
+                        manufacture = updateCarDto.manufacture,
+                        productionYear = updateCarDto.productionYear,
+                         rentAvailable = updateCarDto.rentAvailable)
+
         return carRepository.save(car)
     }
 
@@ -48,7 +55,6 @@ class CarUpdateServiceImpl(
     private fun updateCarCategoryEntity(updateCarDto: UpdateCarDto, updatedCar: CarEntity): List<String> {
         val categoryNames = mutableListOf<String>()
         carCategoryRepository.deleteByCarId(updateCarDto.id)
-
 
         updateCarDto.categoryNames.forEach() { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
