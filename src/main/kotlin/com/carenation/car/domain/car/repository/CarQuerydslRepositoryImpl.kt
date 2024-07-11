@@ -71,7 +71,7 @@ class CarQuerydslRepositoryImpl(
             )
         )
             .from(carEntity)
-            .join(carEntity.carCategories, carCategoryEntity)
+            .join(carCategoryEntity).on(carEntity.id.eq(carCategoryEntity.carEntity.id))
             .where(carCategoryEntity.categoryEntity.id.eq(categoryEntity.id))
             .fetch()
     }

@@ -34,10 +34,10 @@ class CarCreateServiceImpl (
 //            productionYear = registerCarDto.productionYear,
 //            rentAvailable = registerCarDto.rentAvailable
 //        )
-        var carEntity = mapper.toCarEntity(registerCarDto)
+        var car = mapper.toCarEntity(registerCarDto)
 
         // 영속화
-        val savedCar = carRepository.save(carEntity)
+        val savedCar = carRepository.save(car)
         
         // 카테고리 영속화
         val categoryNames = mutableListOf<String>()
@@ -49,7 +49,7 @@ class CarCreateServiceImpl (
         }
 
 
-        return mapper.toRegisteredCarDto(carEntity)
+        return mapper.toRegisteredCarDto(car)
 
     }
 }

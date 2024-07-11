@@ -1,6 +1,5 @@
 package com.carenation.car.domain.car.mapper
 
-import com.carenation.car.domain.car.dto.CarEntityDto
 import com.carenation.car.domain.car.dto.CarInfoDto
 import com.carenation.car.domain.car.dto.RegisterCarDto
 import com.carenation.car.domain.car.dto.RegisteredCarDto
@@ -10,8 +9,6 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 @Mapper
 interface CarMapper {
-
-    fun toRegisterCarDto(carEntity: CarEntity) : RegisterCarDto
 
     @Mapping(source = "modelName", target = "modelName")
     fun toCarInfoDto(carEntity: CarEntity) : CarInfoDto

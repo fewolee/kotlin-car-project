@@ -12,7 +12,4 @@ class CategoryEntity(
     @Column(nullable = false)
     val categoryName: String,
 
-//    @OneToMany(mappedBy = "categoryEntity", cascade = [CascadeType.ALL], orphanRemoval = true)
-//    val carCategories: MutableSet<CarCategoryEntity> = mutableSetOf()
-
 )
