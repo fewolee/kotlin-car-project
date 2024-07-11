@@ -3,6 +3,7 @@ package com.carenation.car.domain.car.service
 import com.carenation.car.domain.car.dto.UpdateCarDto
 import com.carenation.car.domain.car.dto.UpdatedCarDto
 import com.carenation.car.domain.car.entity.CarEntity
+import com.carenation.car.domain.car.mapper.CarMapper
 import com.carenation.car.domain.car.repository.CarRepository
 import com.carenation.car.domain.category.entity.CarCategoryEntity
 import com.carenation.car.domain.category.repository.CarCategoryRepository
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service
 class CarUpdateServiceImpl(
     private val carRepository: CarRepository,
     private val categoryRepository: CategoryRepository,
-    private val carCategoryRepository: CarCategoryRepository
+    private val carCategoryRepository: CarCategoryRepository,
+    private val carMapper : CarMapper
 ) : CarUpdateService {
 
     @Transactional
@@ -23,13 +25,15 @@ class CarUpdateServiceImpl(
         // carEntity 수정
         val updatedCar = updateCarEntity(updateCarDto)
 
-        return UpdatedCarDto(
-            modelName = updatedCar.modelName,
-            manufacture = updatedCar.manufacture,
-            productionYear = updatedCar.productionYear,
-            rentAvailable = updatedCar.rentAvailable,
-            categoryNames = updateCarCategoryEntity(updateCarDto, updatedCar)
-        )
+        return carMapper.toUpdatedCarDto(updatedCar,updateCarCategoryEntity(updateCarDto, updatedCar))
+
+//        return UpdatedCarDto(
+//            modelName = updatedCar.modelName,
+//            manufacture = updatedCar.manufacture,
+//            productionYear = updatedCar.productionYear,
+//            rentAvailable = updatedCar.rentAvailable,
+//            categoryNames = updateCarCategoryEntity(updateCarDto, updatedCar)
+//        )
     }
 
     // carEntity 업데이트

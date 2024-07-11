@@ -1,9 +1,6 @@
 package com.carenation.car.domain.car.mapper
 
-import com.carenation.car.domain.car.dto.CarInfoDto
-import com.carenation.car.domain.car.dto.RegisterCarDto
-import com.carenation.car.domain.car.dto.RegisteredCarDto
-import com.carenation.car.domain.car.dto.UpdateCarDto
+import com.carenation.car.domain.car.dto.*
 import com.carenation.car.domain.car.entity.CarEntity
 import com.carenation.car.domain.car.request.CarUpdateRequest
 import org.mapstruct.InheritConfiguration
@@ -23,4 +20,6 @@ interface CarMapper {
     fun toRegisteredCarDto(carEntity: CarEntity): RegisteredCarDto
 
     fun toUpdateCarDto(id: Long, req: CarUpdateRequest): UpdateCarDto
+
+    fun toUpdatedCarDto(carEntity: CarEntity, categoryNames : List<String>) : UpdatedCarDto
 }

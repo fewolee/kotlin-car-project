@@ -26,7 +26,7 @@ class CarEntity(
 //    var carCategories: MutableList<CarCategoryEntity> = mutableListOf()
 
 ) {
-    fun updateInfo(modelName: String, manufacture: String, productionYear: Int, rentAvailable: Boolean) {
+     fun updateInfo(modelName: String, manufacture: String, productionYear: Int, rentAvailable: Boolean) {
         this.modelName = modelName
         this.manufacture = manufacture
         this.rentAvailable = rentAvailable
