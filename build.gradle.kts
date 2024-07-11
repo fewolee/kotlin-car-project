@@ -56,6 +56,11 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     implementation("io.swagger.core.v3:swagger-annotations:2.2.8")
 
+    // MapStruct 추가
+    implementation("org.mapstruct:mapstruct:1.5.2.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.2.Final")
+    kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
+
 
 }
 

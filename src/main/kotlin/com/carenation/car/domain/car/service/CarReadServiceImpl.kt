@@ -27,6 +27,7 @@ class CarReadServiceImpl(
         return carRepository.getByCategoryName(category)
     }
 
+
     @Transactional
     override fun getDynamicQuery(modelName: String?, manufacture: String?, productionYear: Int?): List<CarInfoDto> {
         return carRepository.getDynamicQuery(modelName, manufacture, productionYear)

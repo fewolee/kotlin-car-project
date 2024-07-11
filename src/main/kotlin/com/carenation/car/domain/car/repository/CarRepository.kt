@@ -13,7 +13,5 @@ interface CarRepository : JpaRepository<CarEntity, Long> , CarQuerydslRepository
 //    @Query(value = "delete from CarEntity where id = :id")
 //    fun deleteByCarEntityId(id: Long)
 
-    //fun findByManufactureAndModelNameAndProductionYear(manufacture: String, modelName: String, productionYear: Int): List<CarEntity>
-    // 제조사, 모델명, 생산년도로 검색
 
 }
