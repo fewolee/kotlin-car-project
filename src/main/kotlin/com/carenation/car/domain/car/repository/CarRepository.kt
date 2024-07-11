@@ -9,9 +9,4 @@ interface CarRepository : JpaRepository<CarEntity, Long> , CarQuerydslRepository
 
     fun findByIdIn(ids : List<Long>) : List<CarEntity>
 
-//    @Modifying
-//    @Query(value = "delete from CarEntity where id = :id")
-//    fun deleteByCarEntityId(id: Long)
-
-
 }

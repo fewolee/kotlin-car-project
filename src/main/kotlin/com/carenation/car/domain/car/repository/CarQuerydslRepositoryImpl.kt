@@ -9,7 +9,6 @@ import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.core.util.StringUtils
 import com.querydsl.jpa.impl.JPAQueryFactory
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 
@@ -18,10 +17,6 @@ class CarQuerydslRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
     private val categoryRepository: CategoryRepository
 ) : CarQuerydslRepository {
-
-//    @Autowired
-//    lateinit var queryFactory: JPAQueryFactory
-//
 
     // id로 자동차 조회
     override fun getById(carId: Long): CarInfoDto {

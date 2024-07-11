@@ -27,13 +27,6 @@ class CarUpdateServiceImpl(
 
         return carMapper.toUpdatedCarDto(updatedCar,updateCarCategoryEntity(updateCarDto, updatedCar))
 
-//        return UpdatedCarDto(
-//            modelName = updatedCar.modelName,
-//            manufacture = updatedCar.manufacture,
-//            productionYear = updatedCar.productionYear,
-//            rentAvailable = updatedCar.rentAvailable,
-//            categoryNames = updateCarCategoryEntity(updateCarDto, updatedCar)
-//        )
     }
 
     // carEntity 업데이트
