@@ -1,6 +1,7 @@
-package com.carenation.car.domain.car.dto
+package com.carenation.car.domain.car.dto.response
 
-data class RegisteredCarDto (
+// 수정된 자동차의 정보들을 반환하는 Dto
+class UpdatedCarResponse (
     val modelName: String,
     val manufacture: String,
     val productionYear: Int,

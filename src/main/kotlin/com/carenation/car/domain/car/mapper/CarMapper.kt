@@ -2,12 +2,13 @@ package com.carenation.car.domain.car.mapper
 
 import com.carenation.car.domain.car.dto.*
 import com.carenation.car.domain.car.entity.CarEntity
-import com.carenation.car.domain.car.request.CarUpdateRequest
-import org.mapstruct.InheritConfiguration
+import com.carenation.car.domain.car.dto.request.CarUpdateRequest
+import com.carenation.car.domain.car.dto.response.CreatedCarResponse
+import com.carenation.car.domain.car.dto.response.UpdatedCarResponse
 import org.mapstruct.Mapper
-import org.mapstruct.Mapping
 import org.mapstruct.factory.Mappers
 
+// Entity와 Dto간 매핑해주는 인터페이스
 @Mapper(componentModel = "spring")
 interface CarMapper {
 
@@ -15,11 +16,15 @@ interface CarMapper {
         val INSTANCE = Mappers.getMapper(CarMapper::class.java)
     }
 
+    // Car Entity를 CarInfoDto로 변환
     fun toCarInfoDto(carEntity: CarEntity): CarInfoDto
 
-    fun toRegisteredCarDto(carEntity: CarEntity): RegisteredCarDto
+    // Car Entity를 CreatedCarDto로 변환
+    fun toCreatedCarDto(carEntity: CarEntity): CreatedCarResponse
 
+    // CarUpdatRequest Dto와 자동차의 id를 받아 UpdateCarDto로 변환
     fun toUpdateCarDto(id: Long, req: CarUpdateRequest): UpdateCarDto
 
-    fun toUpdatedCarDto(carEntity: CarEntity, categoryNames : List<String>) : UpdatedCarDto
+    // Car Entity와 카테고리 리스트를 받아 UpdatedCarDto로 변환
+    fun toUpdatedCarDto(carEntity: CarEntity, categoryNames : List<String>) : UpdatedCarResponse
 }

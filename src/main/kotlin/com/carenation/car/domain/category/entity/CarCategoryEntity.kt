@@ -8,7 +8,7 @@ import jakarta.persistence.*
 class CarCategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Long? = null, // pk
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = [CascadeType.ALL])
     @JoinColumn(name = "car_id", nullable = false)

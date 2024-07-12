@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.service
 
-import com.carenation.car.domain.car.dto.RegisterCarDto
-import com.carenation.car.domain.car.dto.RegisteredCarDto
+import com.carenation.car.domain.car.dto.request.CreateCarRequest
+import com.carenation.car.domain.car.dto.response.CreatedCarResponse
 import com.carenation.car.domain.car.entity.CarEntity
 import com.carenation.car.domain.car.mapper.CarMapper
 import com.carenation.car.domain.car.repository.CarRepository
@@ -19,11 +19,11 @@ class CarCreateServiceImpl (
     private val carMapper : CarMapper
 ): CarCreateService{
 
-    // 자동차 등록
+    // 자동차 생성
     @Transactional
-    override fun register(
-        req: RegisterCarDto
-    ): RegisteredCarDto {
+    override fun create(
+        req: CreateCarRequest
+    ): CreatedCarResponse {
 
         //영속화 목적 entity로 변환
         var car = CarEntity(
@@ -46,7 +46,8 @@ class CarCreateServiceImpl (
         }
 
 
-        return carMapper.toRegisteredCarDto(car)
+        // 생성한 Car 엔티티를 Mapper를 통해 CreatedCarDto로 반환
+        return carMapper.toCreatedCarDto(car)
 
     }
 }

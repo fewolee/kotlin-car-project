@@ -1,13 +1,10 @@
-package com.carenation.car.domain.car.dto
+package com.carenation.car.domain.car.dto.request
 
 import com.carenation.car.domain.car.util.NotBlankElementList
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotEmpty
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Positive
+import jakarta.validation.constraints.*
 
-data class RegisterCarDto (
+// 자동차 정보를 수정하기 위해 요청하는 DTO
+data class CarUpdateRequest(
     @field:NotBlank(message = "모델명은 필수입니다")
     val modelName: String,
 
@@ -22,5 +19,5 @@ data class RegisterCarDto (
     val rentAvailable: Boolean,
 
     @NotBlankElementList
-    val categoryNames: List<String>
+    val categoryNames: List<String> // 자동차 카테고리
 )

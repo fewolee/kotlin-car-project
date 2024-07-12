@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CarCategoryRepository : JpaRepository<CarCategoryEntity, Long> {
 
+    // Query를 사용하여 자동차의 id로 CarCategory 엔티티를 삭제
     @Modifying
     @Query("DELETE FROM CarCategoryEntity c WHERE c.carEntity.id = :carId")
     fun deleteByCarId(@Param("carId") carId: Long)

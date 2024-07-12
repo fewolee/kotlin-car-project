@@ -1,6 +1,5 @@
 package com.carenation.car.domain.car.entity
 
-import com.carenation.car.domain.category.entity.CarCategoryEntity
 import jakarta.persistence.*
 
 @Entity
@@ -23,6 +22,7 @@ class CarEntity(
     var rentAvailable: Boolean, // 대여가능여부
 
 ) {
+    // 자동차의 정보들을 수정
      fun updateInfo(modelName: String, manufacture: String, productionYear: Int, rentAvailable: Boolean) {
         this.modelName = modelName
         this.manufacture = manufacture

@@ -2,8 +2,9 @@ package com.carenation.car.domain.car.service
 
 
 import com.carenation.car.domain.car.dto.UpdateCarDto
-import com.carenation.car.domain.car.dto.UpdatedCarDto
+import com.carenation.car.domain.car.dto.response.UpdatedCarResponse
 
 interface CarUpdateService {
-    fun update(updateCarDto: UpdateCarDto): UpdatedCarDto
+    // 자동차 정보 수정
+    fun update(updateCarDto: UpdateCarDto): UpdatedCarResponse
 }
