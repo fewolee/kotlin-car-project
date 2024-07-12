@@ -7,9 +7,9 @@ import jakarta.persistence.*
 class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Long? = null, // pk
 
     @Column(nullable = false)
-    val categoryName: String,
+    val categoryName: String, // 카테고리 이름
 
 )

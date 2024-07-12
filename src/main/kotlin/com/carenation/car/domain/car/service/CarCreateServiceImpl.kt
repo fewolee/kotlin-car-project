@@ -19,9 +19,9 @@ class CarCreateServiceImpl (
     private val carMapper : CarMapper
 ): CarCreateService{
 
-    // 자동차 등록
+    // 자동차 생성
     @Transactional
-    override fun register(
+    override fun create(
         req: CreateCarRequest
     ): CreatedCarResponse {
 
@@ -46,7 +46,8 @@ class CarCreateServiceImpl (
         }
 
 
-        return carMapper.toRegisteredCarDto(car)
+        // 생성한 Car 엔티티를 Mapper를 통해 CreatedCarDto로 반환
+        return carMapper.toCreatedCarDto(car)
 
     }
 }

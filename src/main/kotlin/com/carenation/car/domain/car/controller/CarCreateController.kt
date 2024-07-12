@@ -17,11 +17,11 @@ class CarCreateController(
     private val carCreateServiceImpl: CarCreateService
 ) {
 
-    //자동차 등록
+    // 자동차 등록
     @PostMapping
-    fun register(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CreatedCarResponse> {
+    fun create(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CreatedCarResponse> {
 
-        return ResponseEntity(carCreateServiceImpl.register(createCarRequest), HttpStatus.CREATED)
+        return ResponseEntity(carCreateServiceImpl.create(createCarRequest), HttpStatus.CREATED)
     }
 
 

@@ -18,7 +18,7 @@ class CarQuerydslRepositoryImpl(
     private val categoryRepository: CategoryRepository
 ) : CarQuerydslRepository {
 
-    // id로 자동차 조회
+    // 자동차의 id로 자동차 엔티티를 조회해 CarInfoDto로 반환
     override fun getById(carId: Long): CarInfoDto {
 
         return queryFactory.select(
@@ -37,7 +37,7 @@ class CarQuerydslRepositoryImpl(
 
     }
 
-    // 모든 자동차 조회
+    // 자동차의 모든 엔티티를 조회해 CarInfoDto 리스트로 반환
     override fun getAll(): List<CarInfoDto> {
         return queryFactory.select(
             Projections.constructor(
@@ -52,7 +52,7 @@ class CarQuerydslRepositoryImpl(
             .fetch()
     }
 
-    //카테고리 이름으로 자동차 조회
+    // 카테고리 이름으로 자동차 엔티티를 조회해 CarInfDto 리스트로 반환
     override fun getByCategoryName(category: String): List<CarInfoDto> {
         val categoryEntity = categoryRepository.findByCategoryName(category)
             ?: throw IllegalArgumentException("카테고리 이름이 없습니다: $category")
@@ -73,7 +73,7 @@ class CarQuerydslRepositoryImpl(
     }
 
 
-    // 모델명, 제조사, 생산년도로 자동차 초회하는 동적 쿼리 메서드
+    // 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 CarInfoDto 리스트로 반환
         override fun getDynamicQuery(req: CarInfoListRequest): List<CarInfoDto> {
         return queryFactory.select(
             Projections.constructor(

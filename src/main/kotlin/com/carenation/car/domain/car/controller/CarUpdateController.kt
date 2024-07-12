@@ -19,7 +19,7 @@ class CarUpdateController(
     private val carMapper : CarMapper
 ) {
 
-    // 자동차 수정
+    // 자동차 정보 수정
     @PutMapping("/{id}")
     fun update(@PathVariable @NotNull(message ="Car ID는 필수입니다") id: Long,
                @Valid @RequestBody req: CarUpdateRequest
