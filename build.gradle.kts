@@ -52,9 +52,7 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
     // swagger 추가
-    implementation("io.springfox:springfox-swagger-ui:3.0.0")
-    implementation("io.springfox:springfox-boot-starter:3.0.0")
-    implementation("io.swagger.core.v3:swagger-annotations:2.2.8")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     // MapStruct 추가
     implementation("org.mapstruct:mapstruct:1.5.2.Final")

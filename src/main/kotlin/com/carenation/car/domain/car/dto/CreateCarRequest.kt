@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Positive
 
-data class RegisterCarDto (
+data class CreateCarRequest (
     @field:NotBlank(message = "모델명은 필수입니다")
     val modelName: String,
 

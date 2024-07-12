@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.controller
 
-import com.carenation.car.domain.car.dto.RegisterCarDto
-import com.carenation.car.domain.car.dto.RegisteredCarDto
+import com.carenation.car.domain.car.dto.CreateCarRequest
+import com.carenation.car.domain.car.dto.CreatedCarResponse
 import com.carenation.car.domain.car.service.CarCreateService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
 @RestController
 @RequestMapping("/cars")
 class CarCreateController(
@@ -20,9 +19,9 @@ class CarCreateController(
 
     //자동차 등록
     @PostMapping
-    fun register(@Valid @RequestBody registerCarDto: RegisterCarDto): ResponseEntity<RegisteredCarDto> {
+    fun register(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CreatedCarResponse> {
 
-        return ResponseEntity(carCreateServiceImpl.register(registerCarDto), HttpStatus.CREATED)
+        return ResponseEntity(carCreateServiceImpl.register(createCarRequest), HttpStatus.CREATED)
     }
 
 

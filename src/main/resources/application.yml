@@ -22,6 +22,8 @@ spring:
       ddl-auto: update
     open-in-view: false
     show_sql: true
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   logging.level:
     org.hibernate.SQL: debug

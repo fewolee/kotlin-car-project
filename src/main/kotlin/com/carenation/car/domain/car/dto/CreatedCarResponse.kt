@@ -1,6 +1,6 @@
 package com.carenation.car.domain.car.dto
 
-data class RegisteredCarDto (
+data class CreatedCarResponse (
     val modelName: String,
     val manufacture: String,
     val productionYear: Int,

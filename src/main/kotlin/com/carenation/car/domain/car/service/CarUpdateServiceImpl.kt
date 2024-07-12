@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.dto.UpdateCarDto
-import com.carenation.car.domain.car.dto.UpdatedCarDto
+import com.carenation.car.domain.car.dto.UpdatedCarResponse
 import com.carenation.car.domain.car.entity.CarEntity
 import com.carenation.car.domain.car.mapper.CarMapper
 import com.carenation.car.domain.car.repository.CarRepository
@@ -21,7 +21,7 @@ class CarUpdateServiceImpl(
 ) : CarUpdateService {
 
     @Transactional
-    override fun update(updateCarDto: UpdateCarDto): UpdatedCarDto {
+    override fun update(updateCarDto: UpdateCarDto): UpdatedCarResponse {
         // carEntity 수정
         val updatedCar = updateCarEntity(updateCarDto)
 
