@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.controller
 
 import com.carenation.car.domain.car.dto.CarInfoDto
-import com.carenation.car.domain.car.request.CarInfoListRequest
+import com.carenation.car.domain.car.dto.request.CarInfoListRequest
 import com.carenation.car.domain.car.service.CarReadService
 import jakarta.validation.constraints.NotNull
 import org.springframework.http.ResponseEntity

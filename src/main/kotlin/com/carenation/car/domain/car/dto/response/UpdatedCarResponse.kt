@@ -1,4 +1,4 @@
-package com.carenation.car.domain.car.dto
+package com.carenation.car.domain.car.dto.response
 
 class UpdatedCarResponse (
     val modelName: String,

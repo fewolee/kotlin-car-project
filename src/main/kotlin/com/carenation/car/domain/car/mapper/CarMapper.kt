@@ -2,7 +2,9 @@ package com.carenation.car.domain.car.mapper
 
 import com.carenation.car.domain.car.dto.*
 import com.carenation.car.domain.car.entity.CarEntity
-import com.carenation.car.domain.car.request.CarUpdateRequest
+import com.carenation.car.domain.car.dto.request.CarUpdateRequest
+import com.carenation.car.domain.car.dto.response.CreatedCarResponse
+import com.carenation.car.domain.car.dto.response.UpdatedCarResponse
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 

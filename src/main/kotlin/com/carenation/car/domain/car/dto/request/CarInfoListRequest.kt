@@ -1,4 +1,4 @@
-package com.carenation.car.domain.car.request
+package com.carenation.car.domain.car.dto.request
 
 data class CarInfoListRequest(
     val modelName: String?,

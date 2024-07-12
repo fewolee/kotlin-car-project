@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.repository
 
 import com.carenation.car.domain.car.dto.CarInfoDto
-import com.carenation.car.domain.car.request.CarInfoListRequest
+import com.carenation.car.domain.car.dto.request.CarInfoListRequest
 
 interface CarQuerydslRepository {
 

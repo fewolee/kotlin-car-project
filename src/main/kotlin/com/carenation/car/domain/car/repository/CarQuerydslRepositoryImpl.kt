@@ -2,7 +2,7 @@ package com.carenation.car.domain.car.repository
 
 import com.carenation.car.domain.car.dto.CarInfoDto
 import com.carenation.car.domain.car.entity.QCarEntity.carEntity
-import com.carenation.car.domain.car.request.CarInfoListRequest
+import com.carenation.car.domain.car.dto.request.CarInfoListRequest
 import com.carenation.car.domain.category.entity.QCarCategoryEntity.carCategoryEntity
 import com.carenation.car.domain.category.repository.CategoryRepository
 import com.querydsl.core.types.Projections

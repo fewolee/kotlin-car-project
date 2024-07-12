@@ -2,7 +2,7 @@ package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.dto.CarInfoDto
 import com.carenation.car.domain.car.repository.CarRepository
-import com.carenation.car.domain.car.request.CarInfoListRequest
+import com.carenation.car.domain.car.dto.request.CarInfoListRequest
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

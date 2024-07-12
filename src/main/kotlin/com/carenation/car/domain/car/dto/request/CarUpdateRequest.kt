@@ -1,4 +1,4 @@
-package com.carenation.car.domain.car.request
+package com.carenation.car.domain.car.dto.request
 
 import com.carenation.car.domain.car.util.NotBlankElementList
 import jakarta.validation.constraints.*

@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.service
 
-import com.carenation.car.domain.car.dto.CreateCarRequest
-import com.carenation.car.domain.car.dto.CreatedCarResponse
+import com.carenation.car.domain.car.dto.request.CreateCarRequest
+import com.carenation.car.domain.car.dto.response.CreatedCarResponse
 import com.carenation.car.domain.car.entity.CarEntity
 import com.carenation.car.domain.car.mapper.CarMapper
 import com.carenation.car.domain.car.repository.CarRepository
