@@ -5,9 +5,9 @@ import com.carenation.car.domain.car.dto.response.UpdatedCarResponse
 import com.carenation.car.domain.car.entity.CarEntity
 import com.carenation.car.domain.car.mapper.CarMapper
 import com.carenation.car.domain.car.repository.CarRepository
-import com.carenation.car.domain.category.entity.CarCategoryEntity
-import com.carenation.car.domain.category.repository.CarCategoryRepository
-import com.carenation.car.domain.category.repository.CategoryRepository
+import com.carenation.car.domain.car.entity.CarCategoryEntity
+import com.carenation.car.domain.car.repository.CarCategoryRepository
+import com.carenation.car.domain.car.repository.CategoryRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

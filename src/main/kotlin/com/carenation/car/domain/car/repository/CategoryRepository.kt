@@ -1,6 +1,6 @@
-package com.carenation.car.domain.category.repository
+package com.carenation.car.domain.car.repository
 
-import com.carenation.car.domain.category.entity.CategoryEntity
+import com.carenation.car.domain.car.entity.CategoryEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CategoryRepository : JpaRepository<CategoryEntity, Long>{

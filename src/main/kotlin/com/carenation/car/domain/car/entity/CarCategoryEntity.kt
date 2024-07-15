@@ -1,6 +1,5 @@
-package com.carenation.car.domain.category.entity
+package com.carenation.car.domain.car.entity
 
-import com.carenation.car.domain.car.entity.CarEntity
 import jakarta.persistence.*
 
 @Entity

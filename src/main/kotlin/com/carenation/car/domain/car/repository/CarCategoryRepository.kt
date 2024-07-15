@@ -1,7 +1,6 @@
-package com.carenation.car.domain.category.repository
+package com.carenation.car.domain.car.repository
 
-import com.carenation.car.domain.car.entity.CarEntity
-import com.carenation.car.domain.category.entity.CarCategoryEntity
+import com.carenation.car.domain.car.entity.CarCategoryEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query

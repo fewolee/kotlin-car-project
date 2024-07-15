@@ -1,7 +1,7 @@
 package com.carenation.car.domain.car.service
 
 import com.carenation.car.domain.car.repository.CarRepository
-import com.carenation.car.domain.category.repository.CarCategoryRepository
+import com.carenation.car.domain.car.repository.CarCategoryRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
