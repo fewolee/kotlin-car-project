@@ -1,7 +1,7 @@
 package com.carenation.car.adapter.`in`.web
 
 import com.carenation.car.adapter.`in`.dto.request.CreateCarRequest
-import com.carenation.car.adapter.`in`.dto.response.CreatedCarResponse
+import com.carenation.car.adapter.out.dto.response.CreatedCarResponse
 import com.carenation.car.port.`in`.usecase.CarUseCase
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/cars")
-class CarController(
+class CarCreateController(
     private val carUseCase: CarUseCase
 ) {
 
