@@ -6,3 +6,5 @@ data class CarInfoListRequest(
     val manufacture: String?, // 제조사
     val productionYear: Int? // 생산년도
 )
+
+

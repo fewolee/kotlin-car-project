@@ -1,4 +1,4 @@
-package com.carenation.car.adapter.out.persistence.repository
+package com.carenation.car.adapter.out.persistence
 
 import com.carenation.car.adapter.`in`.dto.CarInfoDto
 import com.carenation.car.adapter.`in`.dto.UpdateCarDto
@@ -9,8 +9,13 @@ import com.carenation.car.adapter.out.dto.response.UpdatedCarResponse
 import com.carenation.car.adapter.out.persistence.entity.CarCategoryEntity
 import com.carenation.car.adapter.out.persistence.entity.CarEntity
 import com.carenation.car.adapter.out.persistence.mapper.CarMapper
-import com.carenation.car.port.out.CarOutport
-import jakarta.transaction.Transactional
+import com.carenation.car.adapter.out.persistence.repository.CarCategoryRepository
+import com.carenation.car.adapter.out.persistence.repository.CarRepository
+import com.carenation.car.adapter.out.persistence.repository.CategoryRepository
+import com.carenation.car.port.out.CarCreateOutPort
+import com.carenation.car.port.out.CarDeleteOutPort
+import com.carenation.car.port.out.CarReadOutPort
+import com.carenation.car.port.out.CarUpdateOutPort
 import org.springframework.stereotype.Component
 
 @Component
@@ -20,9 +25,8 @@ class CarPersistAdapter(
     private val categoryRepository: CategoryRepository,
     private val carCategoryRepository: CarCategoryRepository,
     private val carMapper : CarMapper
-) : CarOutport{
+) : CarCreateOutPort, CarUpdateOutPort, CarReadOutPort, CarDeleteOutPort{
 
-    @Transactional
     override fun create(req: CreateCarRequest): CreatedCarResponse {
         //영속화 목적 entity로 변환
         var car = CarEntity(
@@ -51,27 +55,27 @@ class CarPersistAdapter(
 
     }
 
-    @Transactional
+
     override fun getById(carId: Long): CarInfoDto {
         return carRepository.getById(carId)
     }
 
-    @Transactional
+
     override fun getAll(): List<CarInfoDto> {
         return carRepository.getAll()
     }
 
-    @Transactional
+
     override fun getByCategoryName(categoryName: String): List<CarInfoDto> {
         return carRepository.getByCategoryName(categoryName)
     }
 
-    @Transactional
+
     override fun getDynamicQuery(req: CarInfoListRequest): List<CarInfoDto> {
         return carRepository.getDynamicQuery(req)
     }
 
-    @Transactional
+
     override fun update(updateCarDto: UpdateCarDto): UpdatedCarResponse {
 
         // carEntity 수정
@@ -120,7 +124,7 @@ class CarPersistAdapter(
 
 
     // 자동차 삭제
-    @Transactional
+
     override fun delete(carId: Long) {
         // CarCategoryRepository에서 자동차 id에 해당하는 엔티티 먼저 삭제
         carCategoryRepository.deleteByCarId(carId)
