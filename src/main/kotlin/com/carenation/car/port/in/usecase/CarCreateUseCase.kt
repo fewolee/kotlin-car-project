@@ -1,7 +1,7 @@
 package com.carenation.car.port.`in`.usecase
 
-import com.carenation.car.adapter.`in`.dto.request.CreateCarRequest
-import com.carenation.car.adapter.out.dto.response.CreatedCarResponse
+import com.carenation.car.application.domain.CarCreateOutDto
+import com.carenation.car.application.domain.CarAllInfo
 
 /***
 input port
@@ -10,6 +10,6 @@ input port
 interface CarCreateUseCase {
 
     // 자동차 등록
-    fun create(createCarRequest: CreateCarRequest): CreatedCarResponse
+    fun create(carAllInfo: CarAllInfo): CarCreateOutDto
 
 }

@@ -1,7 +1,8 @@
 package com.carenation.car.adapter.`in`.web
 
-import com.carenation.car.adapter.`in`.dto.CarInfoDto
+import com.carenation.car.application.domain.CarInfoDto
 import com.carenation.car.adapter.`in`.dto.request.CarInfoListRequest
+import com.carenation.car.adapter.out.persistence.mapper.CarMapper
 import com.carenation.car.port.`in`.usecase.CarReadUseCase
 import jakarta.validation.constraints.NotNull
 
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/cars")
 class CarReadController(
-    private val carReadUseCase: CarReadUseCase
+    private val carReadUseCase: CarReadUseCase,
+    private val carMapper: CarMapper
 ) {
 
     //자동차 id로 자동차 정보 조회
@@ -38,7 +40,7 @@ class CarReadController(
     //제조사, 모델명, 생산년도로 자동차 정보 조회
     @GetMapping("/")
     fun getByDynamicQuery(@ModelAttribute req: CarInfoListRequest): ResponseEntity<List<CarInfoDto>> {
-        return ResponseEntity.ok(carReadUseCase.getDynamicQuery(req))
+        return ResponseEntity.ok(carReadUseCase.getDynamicQuery(carMapper.toCarInfoListInDto(req)))
     }
 
 

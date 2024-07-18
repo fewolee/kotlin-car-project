@@ -1,7 +1,7 @@
 package com.carenation.car.application.service
 
-import com.carenation.car.adapter.`in`.dto.UpdateCarDto
-import com.carenation.car.adapter.out.dto.response.UpdatedCarResponse
+import com.carenation.car.application.domain.CarUpdateInDto
+import com.carenation.car.application.domain.CarUpdateOutDto
 import com.carenation.car.port.`in`.usecase.CarUpdateUseCase
 import com.carenation.car.port.out.CarUpdateOutPort
 import jakarta.transaction.Transactional
@@ -14,8 +14,8 @@ class CarUpdateService (
 
 
     @Transactional
-    override fun update(updateCarDto: UpdateCarDto): UpdatedCarResponse {
-        return carUpdateOutPort.update(updateCarDto)
+    override fun update(carUpdateInDto: CarUpdateInDto): CarUpdateOutDto {
+        return carUpdateOutPort.update(carUpdateInDto)
     }
 
 }

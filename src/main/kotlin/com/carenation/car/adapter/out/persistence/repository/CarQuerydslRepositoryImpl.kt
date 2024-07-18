@@ -1,9 +1,10 @@
 package com.carenation.car.adapter.out.persistence.repository
 
-import com.carenation.car.adapter.`in`.dto.CarInfoDto
+import com.carenation.car.application.domain.CarInfoDto
 import com.carenation.car.adapter.`in`.dto.request.CarInfoListRequest
 import com.carenation.car.adapter.out.persistence.entity.QCarCategoryEntity.carCategoryEntity
 import com.carenation.car.adapter.out.persistence.entity.QCarEntity.carEntity
+import com.carenation.car.application.domain.CarInfoListInDto
 
 import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.BooleanExpression
@@ -73,7 +74,7 @@ class CarQuerydslRepositoryImpl(
 
 
     // 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 CarInfoDto 리스트로 반환
-    override fun getDynamicQuery(req: CarInfoListRequest): List<CarInfoDto> {
+    override fun getDynamicQuery(req: CarInfoListInDto): List<CarInfoDto> {
         return queryFactory.select(
             Projections.constructor(
                 CarInfoDto::class.java,

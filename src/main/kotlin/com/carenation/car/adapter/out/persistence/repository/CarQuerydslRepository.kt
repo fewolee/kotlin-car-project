@@ -1,7 +1,8 @@
 package com.carenation.car.adapter.out.persistence.repository
 
-import com.carenation.car.adapter.`in`.dto.CarInfoDto
+import com.carenation.car.application.domain.CarInfoDto
 import com.carenation.car.adapter.`in`.dto.request.CarInfoListRequest
+import com.carenation.car.application.domain.CarInfoListInDto
 
 interface CarQuerydslRepository {
 
@@ -15,7 +16,7 @@ interface CarQuerydslRepository {
     fun getByCategoryName(categoryName: String): List<CarInfoDto>
 
     // 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 CarInfoDto 리스트로 반환
-    fun getDynamicQuery(req : CarInfoListRequest) : List<CarInfoDto>
+    fun getDynamicQuery(req : CarInfoListInDto) : List<CarInfoDto>
 
 
 

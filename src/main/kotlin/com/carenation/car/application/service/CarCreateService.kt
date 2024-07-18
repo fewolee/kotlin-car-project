@@ -1,7 +1,7 @@
 package com.carenation.car.application.service
 
-import com.carenation.car.adapter.`in`.dto.request.CreateCarRequest
-import com.carenation.car.adapter.out.dto.response.CreatedCarResponse
+import com.carenation.car.application.domain.CarCreateOutDto
+import com.carenation.car.application.domain.CarAllInfo
 import com.carenation.car.port.`in`.usecase.CarCreateUseCase
 import com.carenation.car.port.out.CarCreateOutPort
 import jakarta.transaction.Transactional
@@ -14,8 +14,8 @@ class CarCreateService (
 ): CarCreateUseCase{
 
     @Transactional
-    override fun create(req: CreateCarRequest): CreatedCarResponse {
-       return carCreateOutPort.create(req)
+    override fun create(carAllInfo: CarAllInfo): CarCreateOutDto {
+       return carCreateOutPort.create(carAllInfo)
     }
 
 }

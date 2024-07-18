@@ -1,8 +1,8 @@
-package com.carenation.car.adapter.`in`.dto
+package com.carenation.car.application.domain
 
 
 // 자동차를 수정하기 위해 필요한 정보들을 모아둔 Dto
-data class UpdateCarDto (
+data class CarUpdateInDto (
     val id : Long, // 자동차 엔티티 Pk
     val modelName: String, // 모델명
     val manufacture: String, // 제조사

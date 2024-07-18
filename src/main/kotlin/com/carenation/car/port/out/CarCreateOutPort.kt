@@ -1,13 +1,15 @@
 package com.carenation.car.port.out
 
-import com.carenation.car.adapter.`in`.dto.request.CreateCarRequest
-import com.carenation.car.adapter.out.dto.response.CreatedCarResponse
+import com.carenation.car.application.domain.CarCreateOutDto
+import com.carenation.car.application.domain.CarAllInfo
 
-// 내부 영역이 외부 영역으로 사용하기 위한 통로
+/*
+생성 관련 인터페이스
+ */
 interface CarCreateOutPort {
 
     //자동차 등록
-    fun create(createCarRequest: CreateCarRequest) : CreatedCarResponse
+    fun create(carAllInfo: CarAllInfo) : CarCreateOutDto
 
 
 }

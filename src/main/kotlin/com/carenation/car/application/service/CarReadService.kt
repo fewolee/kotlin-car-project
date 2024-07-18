@@ -1,7 +1,8 @@
 package com.carenation.car.application.service
 
-import com.carenation.car.adapter.`in`.dto.CarInfoDto
+import com.carenation.car.application.domain.CarInfoDto
 import com.carenation.car.adapter.`in`.dto.request.CarInfoListRequest
+import com.carenation.car.application.domain.CarInfoListInDto
 import com.carenation.car.port.`in`.usecase.CarReadUseCase
 import com.carenation.car.port.out.CarReadOutPort
 import jakarta.transaction.Transactional
@@ -27,7 +28,7 @@ class CarReadService (
         return carReadOutPort.getByCategoryName(categoryName)
     }
 
-    override fun getDynamicQuery(req: CarInfoListRequest): List<CarInfoDto> {
+    override fun getDynamicQuery(req: CarInfoListInDto): List<CarInfoDto> {
         return  carReadOutPort.getDynamicQuery(req)
     }
 }

@@ -19,8 +19,6 @@ allOpen {
 
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
-val queryDslVersion: String by extra
-
 
 java {
     toolchain {

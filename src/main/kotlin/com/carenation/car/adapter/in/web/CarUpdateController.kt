@@ -1,9 +1,8 @@
 package com.carenation.car.adapter.`in`.web
 
 import com.carenation.car.adapter.`in`.dto.request.CarUpdateRequest
-import com.carenation.car.adapter.out.dto.response.UpdatedCarResponse
 import com.carenation.car.adapter.out.persistence.mapper.CarMapper
-import com.carenation.car.port.`in`.usecase.CarCreateUseCase
+import com.carenation.car.application.domain.CarUpdateOutDto
 import com.carenation.car.port.`in`.usecase.CarUpdateUseCase
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
@@ -21,9 +20,9 @@ class CarUpdateController(
     @PutMapping("/{id}")
     fun update(@PathVariable @NotNull(message ="Car ID는 필수입니다") id: Long,
                @Valid @RequestBody req: CarUpdateRequest
-    ): ResponseEntity<UpdatedCarResponse> {
-        val updateCarDto = carMapper.toUpdateCarDto(id, req)
-        return ResponseEntity.ok(carUpdateUseCase.update(updateCarDto))
+    ): ResponseEntity<CarUpdateOutDto> {
+        val carUpdateInDto = carMapper.toCarUpdateInDto(id, req)
+        return ResponseEntity.ok(carUpdateUseCase.update(carUpdateInDto))
     }
 
 }
