@@ -10,8 +10,6 @@ plugins {
 
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
-val queryDslVersion: String by extra
-
 
 java {
     toolchain {
@@ -26,9 +24,9 @@ repositories {
 dependencies {
     // module 용 의존 주입
     implementation(project(":modules:domain"))
-
     // lib
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework:spring-tx")
 }
 
 

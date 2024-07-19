@@ -10,8 +10,6 @@ plugins {
 
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
-val queryDslVersion: String by extra
-
 
 java {
     toolchain {
@@ -24,13 +22,14 @@ repositories {
 }
 
 dependencies {
-    // module 용 의존 주입
+    // 모듈 의존
+    implementation(project(":modules:application"))
+    implementation(project(":modules:domain"))
+    implementation(project(":modules:adapter-data-jpa"))
     implementation(project(":modules:connector"))
-
-    // lib
+    // 스프링 부트 실행
     implementation("org.springframework.boot:spring-boot-starter")
 }
-
 
 tasks.withType<Test> {
     useJUnitPlatform()

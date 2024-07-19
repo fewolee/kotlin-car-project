@@ -3,7 +3,6 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 plugins {
     id("org.springframework.boot") version "3.3.1"
     id("io.spring.dependency-management") version "1.1.5"
-    kotlin("plugin.jpa") version "1.9.24"
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
     kotlin("kapt") version "1.7.10"
@@ -11,8 +10,6 @@ plugins {
 
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
-val queryDslVersion: String by extra
-
 
 java {
     toolchain {
