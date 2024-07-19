@@ -1,6 +1,5 @@
 package com.carenation.car.adapter.`in`.web
 
-import com.carenation.car.port.`in`.usecase.CarCreateUseCase
 import com.carenation.car.port.`in`.usecase.CarDeleteUseCase
 import jakarta.validation.constraints.NotNull
 import org.springframework.web.bind.annotation.*

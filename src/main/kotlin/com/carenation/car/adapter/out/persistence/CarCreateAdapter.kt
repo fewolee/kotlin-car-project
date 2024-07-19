@@ -43,6 +43,8 @@ class CarCreateAdapter(
         }
 
 
+
+
         // 생성한 Car 정보들을 CarCreateOutDto로 변환
         return CarCreateOutDto(savedCar.modelName,
             savedCar.manufacture,

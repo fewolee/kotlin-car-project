@@ -49,8 +49,6 @@ dependencies {
 
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
-    // swagger 추가
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     // MapStruct 추가
     implementation("org.mapstruct:mapstruct:1.5.2.Final")
@@ -59,8 +57,6 @@ dependencies {
 
 
 }
-
-
 
 
 tasks.withType<Test> {

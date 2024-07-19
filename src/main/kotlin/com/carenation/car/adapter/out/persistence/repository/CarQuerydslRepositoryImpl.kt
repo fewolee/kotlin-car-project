@@ -1,7 +1,6 @@
 package com.carenation.car.adapter.out.persistence.repository
 
 import com.carenation.car.application.domain.CarInfoDto
-import com.carenation.car.adapter.`in`.dto.request.CarInfoListRequest
 import com.carenation.car.adapter.out.persistence.entity.QCarCategoryEntity.carCategoryEntity
 import com.carenation.car.adapter.out.persistence.entity.QCarEntity.carEntity
 import com.carenation.car.application.domain.CarInfoListInDto

@@ -1,7 +1,6 @@
 package com.carenation.car.port.`in`.usecase
 
 import com.carenation.car.application.domain.CarInfoDto
-import com.carenation.car.adapter.`in`.dto.request.CarInfoListRequest
 import com.carenation.car.application.domain.CarInfoListInDto
 
 /***
