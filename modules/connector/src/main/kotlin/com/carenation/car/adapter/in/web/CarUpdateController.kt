@@ -25,7 +25,9 @@ class CarUpdateController(
     fun update(@PathVariable @NotNull(message ="Car ID는 필수입니다") id: Long,
                @Valid @RequestBody req: CarUpdateRequest
     ): ResponseEntity<CarUpdateOutDto> {
+        // 입력받은 car ID와 CarUpdateRequest를 이용해 CarUpdateInDto로 변환
         val carUpdateInDto = carInMapper.toCarUpdateInDto(id, req)
+
         return ResponseEntity.ok(carUpdateUseCase.update(carUpdateInDto))
     }
 

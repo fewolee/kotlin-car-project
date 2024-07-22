@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://localhost:3306/CarDB?autoReconnect=true&useUnicode=true&serverTimezone=Asia/Seoul"
     username: root
-    password: 7328
+    password: ${spring.datasource.password}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect

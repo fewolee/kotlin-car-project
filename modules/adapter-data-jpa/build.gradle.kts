@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    // module 용 의존 주입
+    // module 의존 주입
     implementation(project(":modules:application"))
     implementation(project(":modules:domain"))
 

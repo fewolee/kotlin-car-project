@@ -19,14 +19,12 @@ class CarReadController(
     private val carReadUseCase: CarReadUseCase,
     private val carInMapper: CarInMapper
 ) {
-
     //자동차 id로 자동차 정보 조회
     @GetMapping("/{id}")
     @Operation(summary = "자동차의 ID로 단건 조회하는 API입니다", description = "자동차의 ID를 입력받아 해당하는 자동차의 정보를 조회합니다")
     fun getByCustomId(@PathVariable @NotNull(message ="Car ID는 필수입니다") id: Long): ResponseEntity<CarInfoDto> {
         return ResponseEntity.ok(carReadUseCase.getById(id))
     }
-
 
     //모든 자동차 정보 조회
     @GetMapping
@@ -42,14 +40,11 @@ class CarReadController(
         return ResponseEntity.ok(carReadUseCase.getByCategoryName(category))
     }
 
-
-
     //제조사, 모델명, 생산년도로 자동차 정보 조회
     @GetMapping("/")
     @Operation(summary = "자동차의 정보들로 단건 조회하는 API입니다", description = "자동차의 제조사,모델명,생산년도로 자동차 정보를 조회합니다")
     fun getByDynamicQuery(@Valid @ModelAttribute req: CarInfoListRequest): ResponseEntity<List<CarInfoDto>> {
         return ResponseEntity.ok(carReadUseCase.getDynamicQuery(carInMapper.toCarInfoListInDto(req)))
     }
-
 
 }

@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.*
 class CarDeleteController(
     private val carDeleteUseCase: CarDeleteUseCase
 ) {
-
     // 자동차 삭제
     @DeleteMapping("/{id}")
     @Operation(summary = "자동차를 삭제하는 API입니다", description = "자동차의 ID를 입력받아 해당하는 자동차를 삭제합니다")
     fun delete(@PathVariable @NotNull(message ="Car ID는 필수입니다") id : Long)  {
         carDeleteUseCase.delete(id)
     }
-
-
 }

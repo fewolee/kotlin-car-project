@@ -21,7 +21,6 @@ class CarCreateController(
     private val carCreateUseCase: CarCreateUseCase,
     private val carInMapper: CarInMapper
 ) {
-
     // 자동차 등록
     @PostMapping
     @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
@@ -29,6 +28,4 @@ class CarCreateController(
 
         return ResponseEntity(carCreateUseCase.create(carInMapper.toCarAllInfo(createCarRequest)), HttpStatus.CREATED)
     }
-
-
 }
