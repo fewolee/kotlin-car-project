@@ -21,6 +21,6 @@ interface CarInMapper {
     //CreateCarRequest를 CarInfo 로 변환
     fun toCarAllInfo(createCarRequest: CreateCarRequest) : CarAllInfoDto
 
-    //carInfoListRequest랄 CarInfoListInDto로 변환
+    //carInfoListRequest를 CarInfoListInDto로 변환
     fun toCarInfoListInDto(carInfoListRequest: CarInfoListRequest) : CarInfoListInDto
 }
