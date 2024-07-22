@@ -3,6 +3,9 @@ package com.carenation.car.adapter.`in`.util
 import jakarta.validation.Constraint
 import kotlin.reflect.KClass
 
+/**
+ * List<String> 형의 데이터를 검증하기 위한 어노테이션 클래스
+ */
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [NotBlankElementListValidator::class])

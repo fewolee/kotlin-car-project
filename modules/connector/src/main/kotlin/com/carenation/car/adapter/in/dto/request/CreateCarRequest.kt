@@ -3,6 +3,9 @@ package com.carenation.car.adapter.`in`.dto.request
 import com.carenation.car.adapter.`in`.util.NotBlankElementList
 import jakarta.validation.constraints.*
 
+/**
+ * 자동차를 생성하기 위해 요청올 보내기 위한 Dto
+ */
 data class CreateCarRequest (
     @field:NotBlank(message = "모델명은 필수입니다")
     val modelName: String,

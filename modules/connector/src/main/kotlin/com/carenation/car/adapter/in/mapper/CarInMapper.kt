@@ -7,7 +7,9 @@ import com.carenation.car.application.domain.*
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
 
-// Entity와 Dto간 매핑해주는 인터페이스
+/**
+ * Adapter로 들어오는 Dto를 Application 단에서 사용하기 위한 Dto로 바꿔주기 위한 매퍼 인터페이스
+ */
 @Mapper(componentModel = "spring")
 interface CarInMapper {
 
@@ -21,6 +23,6 @@ interface CarInMapper {
     //CreateCarRequest를 CarInfo 로 변환
     fun toCarAllInfo(createCarRequest: CreateCarRequest) : CarAllInfoDto
 
-    //carInfoListRequest랄 CarInfoListInDto로 변환
+    //carInfoListRequest를 CarInfoListInDto로 변환
     fun toCarInfoListInDto(carInfoListRequest: CarInfoListRequest) : CarInfoListInDto
 }

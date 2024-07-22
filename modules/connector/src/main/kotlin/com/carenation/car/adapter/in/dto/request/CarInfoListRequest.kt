@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Positive
 
-// 모델명, 제조사, 생산년도로 자동차를 동적으로 조회하기 위해 요청하는 Dto
+/**
+ * 모델명, 제조사, 생산년도로 자동차를 동적으로 조회하기 위해 요청을 보내기 위한 Dto
+ */
 data class CarInfoListRequest(
     @field:NotBlank(message = "모델명은 필수입니다")
     val modelName: String?, // 모델명
