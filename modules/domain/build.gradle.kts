@@ -3,7 +3,6 @@ plugins {
     kotlin("jvm") version "1.9.24"
 }
 
-
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
 
