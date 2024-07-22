@@ -86,6 +86,206 @@
     
 
 ---
+## 구현 과정
+
+- 엔티티 : 자동차는 한 개 이상의 카테고리를 가질 수 있고 하나의 카테고리도 여러개의 자동차를 가질 수 있기 떄문에 N:M 관계, CarCategory라는 중간 매핑 엔티티로 구현하여 1:N , M:1 관계 설정
+- Validation : 컨트롤러 단과 컨트롤러로 들어오는 Dto를 spring- validation을 이용하여 유효성 검사
+
+```kotlin
+/**
+ * 자동차를 생성하기 위해 요청올 보내기 위한 Dto
+ */
+data class CreateCarRequest (
+    @field:NotBlank(message = "모델명은 필수입니다")
+    val modelName: String,
+
+    @field:NotEmpty(message = "제조사는 필수입니다")
+    val manufacture: String,
+
+    @field:Positive(message = "양수만 가능합니다")
+    @field:Max(value = 2024, message="생산년도는 2024년을 넘을 수 없습니다")
+    val productionYear: Int,
+
+    @field:NotNull(message = "대여가능 여부는 필수입니다")
+    val rentAvailable: Boolean,
+
+    @NotBlankElementList
+    val categoryNames: List<String> // 자동차 카테고리
+)
+
+// 자동차 등록
+    @PostMapping
+    @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
+    fun create(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CarCreateOutDto> {
+
+        return ResponseEntity(carCreateUseCase.create(carInMapper.toCarAllInfo(createCarRequest)), HttpStatus.CREATED)
+    }
+}
+```
+
+- Mapstruct :  Entity ↔ Dto, Dto ↔ Dto 간 매핑을 위해 mapstruct를 사용하여 매핑
+
+```kotlin
+/**
+ * Adapter로 들어오는 Dto를 Application 단에서 사용하기 위한 Dto로 바꿔주기 위한 매퍼 인터페이스
+ */
+@Mapper(componentModel = "spring")
+interface CarInMapper {
+
+    companion object {
+        val INSTANCE = Mappers.getMapper(CarInMapper::class.java)
+    }
+
+    // CarUpdatRequest Dto와 자동차의 id를 받아 UpdateCarDto로 변환
+    fun toCarUpdateInDto(id: Long, req: CarUpdateRequest): CarUpdateInDto
+
+    //CreateCarRequest를 CarInfo 로 변환
+    fun toCarAllInfo(createCarRequest: CreateCarRequest) : CarAllInfoDto
+
+    //carInfoListRequest를 CarInfoListInDto로 변환
+    fun toCarInfoListInDto(carInfoListRequest: CarInfoListRequest) : CarInfoListInDto
+}
+
+// 자동차 등록
+    @PostMapping
+    @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
+    fun create(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CarCreateOutDto> {
+
+        return ResponseEntity(carCreateUseCase.create(carInMapper.toCarAllInfo(createCarRequest)), HttpStatus.CREATED)
+    }  
+    
+```
+
+---
+
+- Querydsl : 조회 성능을 높이기 위해 jpa 방식이 아닌 Querydsl의 쿼리 팩토리 사용, 동적으로 정보를 조회하기 위해 booleanexpression으로 함수화 해서 조건문 사용
+
+```kotlin
+
+/**
+ * CarQuerydslRepository 인터페이스의 구현체
+ */
+@Service
+class CarQuerydslRepositoryImpl(
+    private val queryFactory: JPAQueryFactory,
+    private val categoryRepository: CategoryRepository
+) : CarQuerydslRepository {
+
+    /**
+     * 자동차의 id로 자동차 엔티티를 조회해 CarInfoDto로 반환
+     * @param carId
+     * @return CarInfoDto
+     */
+    override fun getById(carId: Long): CarInfoDto {
+
+        return queryFactory.select(
+            Projections.constructor(
+                CarInfoDto::class.java,
+                carEntity.modelName,
+                carEntity.manufacture,
+                carEntity.productionYear,
+                carEntity.rentAvailable
+            )
+        )
+            .from(carEntity)
+            .where(carEntity.id.eq(carId))
+            .fetchOne()
+            ?: throw IllegalArgumentException("자동차 ID $carId 이 없습니다")
+
+    }
+
+    /**
+     * 모든 자동차를 조회해 List<CarInfoDto>로 반환
+     * @return List<CarInfoDto>
+     */
+    override fun getAll(): List<CarInfoDto> {
+        return queryFactory.select(
+            Projections.constructor(
+                CarInfoDto::class.java,
+                carEntity.modelName,
+                carEntity.manufacture,
+                carEntity.productionYear,
+                carEntity.rentAvailable
+            )
+        )
+            .from(carEntity)
+            .fetch()
+    }
+
+    /**
+     * 카테고리 이름으로 자동차 엔티티를 조회해 List<CarInfoDto>로 반환
+     * @param category
+     * @return List<CarInfoDto>
+     */
+    override fun getByCategoryName(category: String): List<CarInfoDto> {
+        val categoryEntity = categoryRepository.findByCategoryName(category)
+            ?: throw IllegalArgumentException("카테고리 이름이 없습니다: $category")
+
+        return queryFactory.select(
+            Projections.constructor(
+                CarInfoDto::class.java,
+                carEntity.modelName,
+                carEntity.manufacture,
+                carEntity.productionYear,
+                carEntity.rentAvailable
+            )
+        )
+            .from(carEntity)
+            .join(carCategoryEntity).on(carEntity.id.eq(carCategoryEntity.carEntity.id))
+            .where(carCategoryEntity.categoryEntity.id.eq(categoryEntity.id))
+            .fetch()
+    }
+
+    /**
+     * 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 List<CarInfoDto>로 반환
+     * @param CarInfoListInDto
+     * @return List<CarInfoDto>
+     */
+    override fun getDynamicQuery(req: CarInfoListInDto): List<CarInfoDto> {
+        return queryFactory.select(
+            Projections.constructor(
+                CarInfoDto::class.java,
+                carEntity.modelName,
+                carEntity.manufacture,
+                carEntity.productionYear,
+                carEntity.rentAvailable
+            )
+        )
+            .from(carEntity)
+            .where(eqModelName(req.modelName),
+                eqManufacture(req.manufacture),
+                eqProductionYear(req.productionYear))
+            .fetch()
+    }
+
+    // 모델명이 같은지 확인
+    private fun eqModelName(modelName: String?): BooleanExpression? {
+        return if (StringUtils.isNullOrEmpty(modelName)) null else carEntity.modelName.eq(modelName)
+    }
+
+    // 제조사가 같은지 확인
+    private fun eqManufacture(manufacture: String?): BooleanExpression? {
+        return if (StringUtils.isNullOrEmpty(manufacture)) null else carEntity.manufacture.eq(manufacture)
+    }
+
+    // 생산년도가 같은지 확인
+    private fun eqProductionYear(productionYear: Int?): BooleanExpression? {
+        return if (productionYear == null ) null else carEntity.productionYear.eq(productionYear)
+    }
+
+}
+```
+---
+
+## Naming Convention
+
+- 도메인 + 책임 + 기술
+
+ex) CarCreateController,  CarCreateRequest ,
+
+---
+
+
 
 ## API
 ![image](https://github.com/user-attachments/assets/1464b3e0-c453-4ea2-818b-d8c2efe3c661)
