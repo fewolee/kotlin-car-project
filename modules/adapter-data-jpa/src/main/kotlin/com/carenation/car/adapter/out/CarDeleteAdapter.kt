@@ -1,10 +1,9 @@
-package com.carenation.car.adapter.out.persistence
+package com.carenation.car.adapter.out
 
 import com.carenation.car.adapter.out.repository.CarCategoryRepository
 import com.carenation.car.adapter.out.repository.CarRepository
 import com.carenation.car.port.out.CarDeleteOutPort
 import org.springframework.stereotype.Component
-
 
 /**
  * CarDeleteOutPort의 구현체
@@ -13,8 +12,7 @@ import org.springframework.stereotype.Component
 class CarDeleteAdapter(
     private val carRepository: CarRepository,
     private val carCategoryRepository: CarCategoryRepository,
-) : CarDeleteOutPort{
-
+) : CarDeleteOutPort {
     /**
      * 자동차 삭제
      * @param carId

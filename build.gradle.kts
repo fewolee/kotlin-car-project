@@ -1,4 +1,4 @@
-//plugins {
+// plugins {
 //    id("org.springframework.boot") version "3.3.1"
 //    id("io.spring.dependency-management") version "1.1.5"
 //    kotlin("plugin.jpa") version "1.9.24"
@@ -8,27 +8,27 @@
 //    kotlin("kapt") version "1.7.10"
 //
 //
-//allOpen {
+// allOpen {
 //    annotation("jakarta.persistence.Entity")
 //    annotation("jakarta.persistence.Embeddable")
 //    annotation("jakarta.persistence.MappedSuperclass")
-//}
+// }
 //
 //
-//group = "com.carenation"
-//version = "0.0.1-SNAPSHOT"
+// group = "com.carenation"
+// version = "0.0.1-SNAPSHOT"
 //
-//java {
+// java {
 //    toolchain {
 //        languageVersion = JavaLanguageVersion.of(17)
 //    }
-//}
+// }
 //
-//repositories {
+// repositories {
 //    mavenCentral()
-//}
+// }
 //
-//dependencies {
+// dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 //    implementation("org.springframework.boot:spring-boot-starter-web")
 //    implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -54,10 +54,10 @@
 //    kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
 //
 //
-//}
+// }
 //
 //
-//tasks.withType<Test> {
+// tasks.withType<Test> {
 //    useJUnitPlatform()
-//}
+// }
 //

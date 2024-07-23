@@ -1,12 +1,12 @@
 package com.carenation.car.port.`in`.usecase
 
-import com.carenation.car.application.domain.CarUpdateInDto
-import com.carenation.car.application.domain.CarUpdateOutDto
+import com.carenation.car.application.domain.CarDetailModel
+import com.carenation.car.dto.CarUpdateInDto
 
 /**
  * input port
  */
 interface CarUpdateUseCase {
     // 자동차 정보 수정
-    fun update(carUpdateInDto: CarUpdateInDto): CarUpdateOutDto
+    fun update(carUpdateInDto: CarUpdateInDto): CarDetailModel
 }

@@ -1,12 +1,12 @@
 package com.carenation.car.port.`in`.usecase
 
-import com.carenation.car.application.domain.CarCreateOutDto
-import com.carenation.car.application.domain.CarAllInfoDto
+import com.carenation.car.application.domain.CarDetailModel
+import com.carenation.car.dto.CarCreateInDto
 
 /**
  * input port
  */
 interface CarCreateUseCase {
     // 자동차 등록
-    fun create(carAllInfoDto: CarAllInfoDto): CarCreateOutDto
+    fun create(carCreateInDto: CarCreateInDto): CarDetailModel
 }

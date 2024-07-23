@@ -1,6 +1,5 @@
 package com.carenation.car.port.out
 
-
 /**
  * out port
  */

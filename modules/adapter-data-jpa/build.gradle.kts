@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
     kotlin("plugin.jpa") version "1.9.24"
-    //querydsl
+    // querydsl
     kotlin("kapt") version "1.7.10"
 }
 
@@ -56,7 +56,6 @@ dependencies {
     kaptTest("org.mapstruct:mapstruct-processor:1.5.2.Final")
 }
 
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
@@ -64,4 +63,3 @@ tasks.withType<Test> {
 tasks.named<BootJar>("bootJar") {
     enabled = false
 }
-

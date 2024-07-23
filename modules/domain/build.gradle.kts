@@ -19,8 +19,6 @@ repositories {
 dependencies {
 }
 
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-

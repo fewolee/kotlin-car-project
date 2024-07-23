@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
 
-
     // module 용 의존 주입
     implementation(project(":modules:application"))
     implementation(project(":modules:domain"))
@@ -45,9 +44,7 @@ dependencies {
 
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-
 }
-
 
 tasks.named<BootJar>("bootJar") {
     enabled = false
@@ -56,4 +53,3 @@ tasks.named<BootJar>("bootJar") {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
