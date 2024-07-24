@@ -6,9 +6,9 @@ import com.carenation.car.application.domain.CarDetailModel
 import com.carenation.car.port.`in`.usecase.CarCreateUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,6 +25,6 @@ class CarCreateController(
     @PostMapping
     @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
     fun create(
-        @Valid @RequestBody req: CarCreateRequest,
+        @Validated @RequestBody req: CarCreateRequest,
     ): ResponseEntity<CarDetailModel> = ResponseEntity(carCreateUseCase.create(carInMapper.toCarCreateInDto(req)), HttpStatus.CREATED)
 }

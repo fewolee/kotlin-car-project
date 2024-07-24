@@ -42,7 +42,7 @@ class CarCreateAdapter(
         val categoryNames = mutableListOf<String>()
         carCreateInDto.categoryNames.forEach { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
-            val carCategoryEntity = CarCategoryEntity(carEntity = savedCar, categoryEntity = category)
+            val carCategoryEntity = category?.let { CarCategoryEntity(carEntity = savedCar, categoryEntity = it) }
             carCategoryRepository.save(carCategoryEntity)
             categoryNames.add(categoryName)
         }

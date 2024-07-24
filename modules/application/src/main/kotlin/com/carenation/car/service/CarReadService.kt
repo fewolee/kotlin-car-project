@@ -29,4 +29,12 @@ class CarReadService(
     // 모델명, 제조사, 생상년도로 동적으로 자동차 정보를 조회
     @Transactional(readOnly = true)
     override fun getDynamicQuery(req: CarInfoListInDto): List<CarModel> = carReadOutPort.getDynamicQuery(req)
+
+    // carId로 Car Entity 존재 여부 확인
+    @Transactional(readOnly = true)
+    override fun existsByCarId(carId: Long): Boolean = carReadOutPort.existsByCarId(carId)
+
+    // category로 Category Entity 존재 여부 확인
+    @Transactional(readOnly = true)
+    override fun existsByCategory(category: String): Boolean = carReadOutPort.existsByCategory(category)
 }

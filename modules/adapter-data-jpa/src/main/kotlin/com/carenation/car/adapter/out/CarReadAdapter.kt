@@ -1,6 +1,7 @@
 package com.carenation.car.adapter.out
 
 import com.carenation.car.adapter.out.repository.CarRepository
+import com.carenation.car.adapter.out.repository.CategoryRepository
 import com.carenation.car.application.domain.CarModel
 import com.carenation.car.dto.CarInfoListInDto
 import com.carenation.car.port.out.CarReadOutPort
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class CarReadAdapter(
     private val carRepository: CarRepository,
+    private val categoryRepository: CategoryRepository,
 ) : CarReadOutPort {
     /**
      * 자동차 Id로 자동차 정보 조회
@@ -39,4 +41,8 @@ class CarReadAdapter(
      * @return List<CarModel>
      */
     override fun getDynamicQuery(req: CarInfoListInDto): List<CarModel> = carRepository.getDynamicQuery(req)
+
+    override fun existsByCarId(carId: Long): Boolean = carRepository.existsById(carId)
+
+    override fun existsByCategory(category: String): Boolean = categoryRepository.findByCategoryName(category) != null
 }

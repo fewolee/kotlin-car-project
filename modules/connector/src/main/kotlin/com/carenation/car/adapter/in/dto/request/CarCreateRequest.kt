@@ -1,6 +1,6 @@
 package com.carenation.car.adapter.`in`.dto.request
 
-import com.carenation.car.adapter.`in`.util.NotBlankElementList
+import com.carenation.car.adapter.annotation.NotBlankElementList
 import jakarta.validation.constraints.*
 
 /**

@@ -65,7 +65,7 @@ class CarUpdateAdapter(
         // 수정할 CarUpdateInDto로 CarCategory 엔티티 생성 및 저장
         carUpdateInDto.categoryNames.forEach { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
-            val carCategoryEntity = CarCategoryEntity(carEntity = updatedCar, categoryEntity = category)
+            val carCategoryEntity = category?.let { CarCategoryEntity(carEntity = updatedCar, categoryEntity = it) }
             carCategoryRepository.save(carCategoryEntity)
             categoryNames.add(categoryName)
         }
