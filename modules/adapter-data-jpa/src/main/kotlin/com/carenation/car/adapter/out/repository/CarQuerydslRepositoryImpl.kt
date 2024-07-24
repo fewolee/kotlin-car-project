@@ -19,9 +19,9 @@ class CarQuerydslRepositoryImpl(
     private val categoryRepository: CategoryRepository,
 ) : CarQuerydslRepository {
     /**
-     * 자동차의 id로 자동차 엔티티를 조회해 CarInfoDto로 반환
+     * 자동차의 id로 자동차 엔티티를 조회해 CarModel 반환
      * @param carId
-     * @return CarInfoDto
+     * @return CarModel
      */
     override fun getById(carId: Long): CarModel =
         queryFactory
@@ -39,8 +39,8 @@ class CarQuerydslRepositoryImpl(
             ?: throw IllegalArgumentException("자동차 ID $carId 이 없습니다")
 
     /**
-     * 모든 자동차를 조회해 List<CarInfoDto>로 반환
-     * @return List<CarInfoDto>
+     * 모든 자동차를 조회해 List<CarModel>로 반환
+     * @return List<CarModel>
      */
     override fun getAll(): List<CarModel> =
         queryFactory
@@ -56,9 +56,9 @@ class CarQuerydslRepositoryImpl(
             .fetch()
 
     /**
-     * 카테고리 이름으로 자동차 엔티티를 조회해 List<CarInfoDto>로 반환
+     * 카테고리 이름으로 자동차 엔티티를 조회해 List<CarModel>로 반환
      * @param category
-     * @return List<CarInfoDto>
+     * @return List<CarModel>
      */
     override fun getByCategoryName(category: String): List<CarModel> {
         val categoryEntity =
@@ -84,7 +84,7 @@ class CarQuerydslRepositoryImpl(
     /**
      * 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 List<CarInfoDto>로 반환
      * @param CarInfoListInDto
-     * @return List<CarInfoDto>
+     * @return List<CarModel>
      */
     override fun getDynamicQuery(req: CarInfoListInDto): List<CarModel> =
         queryFactory

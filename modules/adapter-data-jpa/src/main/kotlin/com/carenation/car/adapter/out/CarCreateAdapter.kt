@@ -21,8 +21,8 @@ class CarCreateAdapter(
 ) : CarCreateOutPort {
     /**
      * 자동차 생성
-     * @param CarAllInfoDto
-     * @return CarCreateOutDto
+     * @param carCreateInDto
+     * @return CarDetailModel
      */
     override fun create(carCreateInDto: CarCreateInDto): CarDetailModel {
         // 영속화 목적 entity로 변환
@@ -38,7 +38,7 @@ class CarCreateAdapter(
         val savedCar = carRepository.save(car)
 
         // 카테고리 영속화
-        // CarAllInfoDto의 List<String>형의 카테고리를 반복을 통해 저장
+        // carCreateInDto의 List<String>형 카테고리를 반복을 통해 저장
         val categoryNames = mutableListOf<String>()
         carCreateInDto.categoryNames.forEach { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
@@ -47,7 +47,7 @@ class CarCreateAdapter(
             categoryNames.add(categoryName)
         }
 
-        // 생성한 Car 정보들을 CarCreateOutDto로 변환
+        // 생성한 Car 정보들을 CarDetailModel로 변환
         return CarDetailModel(
             savedCar.modelName,
             savedCar.manufacture,

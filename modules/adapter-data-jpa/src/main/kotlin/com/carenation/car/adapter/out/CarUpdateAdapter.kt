@@ -24,7 +24,7 @@ class CarUpdateAdapter(
     /**
      * 자동차 정보 수정
      * @param CarUpdateInDto
-     * @return CarUpdateOutDto
+     * @return CarDetailModel
      */
     override fun update(carUpdateInDto: CarUpdateInDto): CarDetailModel {
         // carEntity 수정
@@ -62,7 +62,7 @@ class CarUpdateAdapter(
         // 자동차 id로 CarCategoryRepository에 원래 있던 엔티티 삭제
         carCategoryRepository.deleteByCarId(carUpdateInDto.id)
 
-        // 수정할 UpdateCarDto로 CarCategory 엔티티 생성 및 저장
+        // 수정할 CarUpdateInDto로 CarCategory 엔티티 생성 및 저장
         carUpdateInDto.categoryNames.forEach { categoryName ->
             val category = categoryRepository.findByCategoryName(categoryName)
             val carCategoryEntity = CarCategoryEntity(carEntity = updatedCar, categoryEntity = category)

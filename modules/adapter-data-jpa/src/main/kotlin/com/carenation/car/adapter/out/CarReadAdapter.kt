@@ -16,27 +16,27 @@ class CarReadAdapter(
     /**
      * 자동차 Id로 자동차 정보 조회
      * @param carId
-     * @return CarInfoDto
+     * @return CarModel
      */
     override fun getById(carId: Long): CarModel = carRepository.getById(carId)
 
     /**
      * 모든 자동차 정보 조회
-     * @return List<CarInfoDto>
+     * @return List<CarModel>
      */
     override fun getAll(): List<CarModel> = carRepository.getAll()
 
     /**
      * 카테고리 이름으로 자동차 정보 조회
      * @param categoryName
-     * @return List<CarInfoDto>
+     * @return List<CarModel>
      */
     override fun getByCategoryName(categoryName: String): List<CarModel> = carRepository.getByCategoryName(categoryName)
 
     /**
      * 모델명, 제조일자, 생산년도로 자동차 정보를 동적으로 조회
      * @param CarInfoListinDto
-     * @return List<CarInfoDto>
+     * @return List<CarModel>
      */
     override fun getDynamicQuery(req: CarInfoListInDto): List<CarModel> = carRepository.getDynamicQuery(req)
 }

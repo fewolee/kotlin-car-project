@@ -7,7 +7,6 @@ plugins {
     kotlin("plugin.spring") version "1.9.24"
 }
 
-
 group = "com.carenation"
 version = "0.0.1-SNAPSHOT"
 
@@ -28,7 +27,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework:spring-tx")
 }
-
 
 tasks.withType<Test> {
     useJUnitPlatform()
