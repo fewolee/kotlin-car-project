@@ -33,7 +33,11 @@ class CarReadAdapter(
      * @param categoryName
      * @return List<CarModel>
      */
-    override fun getByCategoryName(categoryName: String): List<CarModel> = carRepository.getByCategoryName(categoryName)
+    override fun getByCategoryName(categoryName: String): List<CarModel> {
+        val categoryModel =
+            carRepository.getCategoryModelByCategoryName(categoryName) ?: throw RuntimeException("존재하지 않는 카테고리입니다")
+        return carRepository.getCarModelByCategoryId(categoryModel.id)
+    }
 
     /**
      * 모델명, 제조일자, 생산년도로 자동차 정보를 동적으로 조회

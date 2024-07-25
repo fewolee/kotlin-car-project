@@ -1,7 +1,7 @@
 package com.carenation.car.application.domain
 
 /**
- * 카테고리를 제외한 자동차의 정보들을 나타낸 Dto
+ * 카테고리를 제외한 자동차의 정보들을 나타낸 모델
  */
 data class CarModel(
     val modelName: String, // 모델명

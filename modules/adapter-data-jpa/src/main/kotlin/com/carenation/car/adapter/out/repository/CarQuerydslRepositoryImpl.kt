@@ -1,7 +1,9 @@
 package com.carenation.car.adapter.out.repository
 
+import com.carenation.car.CategoryModel
 import com.carenation.car.adapter.out.persistence.entity.QCarCategoryEntity.carCategoryEntity
 import com.carenation.car.adapter.out.persistence.entity.QCarEntity.carEntity
+import com.carenation.car.adapter.out.persistence.entity.QCategoryEntity.categoryEntity
 import com.carenation.car.application.domain.CarModel
 import com.carenation.car.dto.CarInfoListInDto
 import com.querydsl.core.types.Projections
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Service
 @Service
 class CarQuerydslRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
-    private val categoryRepository: CategoryRepository,
 ) : CarQuerydslRepository {
     /**
      * 자동차의 id로 자동차 엔티티를 조회해 CarModel 반환
@@ -56,16 +57,12 @@ class CarQuerydslRepositoryImpl(
             .fetch()
 
     /**
-     * 카테고리 이름으로 자동차 엔티티를 조회해 List<CarModel>로 반환
-     * @param category
+     * 카테고리  ID로 자동차 엔티티를 조회해 List<CarModel>로 반환
+     * @param categoryId
      * @return List<CarModel>
      */
-    override fun getByCategoryName(category: String): List<CarModel> {
-        val categoryEntity =
-            categoryRepository.findByCategoryName(category)
-                ?: throw IllegalArgumentException("카테고리 이름이 없습니다: $category")
-
-        return queryFactory
+    override fun getCarModelByCategoryId(categoryId: Long): List<CarModel> =
+        queryFactory
             .select(
                 Projections.constructor(
                     CarModel::class.java,
@@ -77,9 +74,20 @@ class CarQuerydslRepositoryImpl(
             ).from(carEntity)
             .join(carCategoryEntity)
             .on(carEntity.id.eq(carCategoryEntity.carEntity.id))
-            .where(carCategoryEntity.categoryEntity.id.eq(categoryEntity.id))
+            .where(carCategoryEntity.categoryEntity.id.eq(categoryId))
             .fetch()
-    }
+
+    override fun getCategoryModelByCategoryName(categoryName: String): CategoryModel? =
+        queryFactory
+            .select(
+                Projections.constructor(
+                    CategoryModel::class.java,
+                    categoryEntity.id,
+                    categoryEntity.categoryName,
+                ),
+            ).from(categoryEntity)
+            .where(categoryEntity.categoryName.eq(categoryName))
+            .fetchOne()
 
     /**
      * 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 List<CarInfoDto>로 반환
