@@ -35,7 +35,7 @@ class CarReadAdapter(
      */
     override fun getByCategoryName(categoryName: String): List<CarModel> {
         val categoryModel =
-            carRepository.getCategoryModelByCategoryName(categoryName) ?: throw RuntimeException("존재하지 않는 카테고리입니다")
+            carRepository.getCategoryModelByCategoryName(categoryName)
         return carRepository.getCarModelByCategoryId(categoryModel.id)
     }
 
@@ -46,7 +46,17 @@ class CarReadAdapter(
      */
     override fun getDynamicQuery(req: CarInfoListInDto): List<CarModel> = carRepository.getDynamicQuery(req)
 
+    /**
+     * 자동차 ID로 자동차 존재 여부 확인
+     * @param carId
+     * @return Boolean
+     */
     override fun existsByCarId(carId: Long): Boolean = carRepository.existsById(carId)
 
-    override fun existsByCategory(category: String): Boolean = categoryRepository.findByCategoryName(category) != null
+    /**
+     * 카테고리 이름으로 카테고리 존재 여부 확인
+     * @param categoryName
+     * @return Boolean
+     */
+    override fun existsByCategory(categoryName: String): Boolean = categoryRepository.findByCategoryName(categoryName) != null
 }

@@ -77,7 +77,12 @@ class CarQuerydslRepositoryImpl(
             .where(carCategoryEntity.categoryEntity.id.eq(categoryId))
             .fetch()
 
-    override fun getCategoryModelByCategoryName(categoryName: String): CategoryModel? =
+    /**
+     * 카테고리 이름로 카테고리 엔티티를 조회해 CategoryModel 반환
+     * @param categoryName
+     * @return CategoryModel
+     */
+    override fun getCategoryModelByCategoryName(categoryName: String): CategoryModel =
         queryFactory
             .select(
                 Projections.constructor(
@@ -88,6 +93,7 @@ class CarQuerydslRepositoryImpl(
             ).from(categoryEntity)
             .where(categoryEntity.categoryName.eq(categoryName))
             .fetchOne()
+            ?: throw IllegalArgumentException("존재하는 $categoryName 이 없습니다")
 
     /**
      * 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 List<CarInfoDto>로 반환

@@ -13,7 +13,7 @@ interface CarQuerydslRepository {
     fun getAll(): List<CarModel>
 
     // category로 Category Model 반환
-    fun getCategoryModelByCategoryName(categoryName: String): CategoryModel?
+    fun getCategoryModelByCategoryName(categoryName: String): CategoryModel
 
     // 카테고리 ID로 자동차 엔티티를 조회해 List<CarModel>로 반환
     fun getCarModelByCategoryId(categoryId: Long): List<CarModel>
