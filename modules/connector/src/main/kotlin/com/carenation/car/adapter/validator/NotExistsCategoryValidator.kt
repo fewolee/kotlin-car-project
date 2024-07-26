@@ -11,5 +11,5 @@ class NotExistsCategoryValidator(
     override fun isValid(
         category: String,
         context: ConstraintValidatorContext?,
-    ): Boolean = carReadUseCase.existsByCategory(category)
+    ): Boolean = carReadUseCase.getByCategoryName(category) != null
 }

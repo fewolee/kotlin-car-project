@@ -18,10 +18,4 @@ interface CarReadUseCase {
 
     // 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 CarModel 리스트로 반환
     fun getDynamicQuery(req: CarInfoListInDto): List<CarModel>
-
-    // carId로 CarEntity 존재 여부 확인
-    fun existsByCarId(carId: Long): Boolean
-
-    // category로 Category Entity 존재 여부 확인
-    fun existsByCategory(category: String): Boolean
 }

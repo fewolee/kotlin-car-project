@@ -11,5 +11,5 @@ class NotExistsCarIdValidator(
     override fun isValid(
         carId: Long,
         context: ConstraintValidatorContext?,
-    ): Boolean = carReadUseCase.existsByCarId(carId)
+    ): Boolean = carReadUseCase.getById(carId) != null
 }

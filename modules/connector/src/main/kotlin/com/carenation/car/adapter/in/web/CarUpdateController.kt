@@ -2,12 +2,13 @@ package com.carenation.car.adapter.`in`.web
 
 import com.carenation.car.adapter.`in`.dto.request.CarUpdateRequest
 import com.carenation.car.adapter.`in`.mapper.CarInMapper
+import com.carenation.car.apipayload.enum.ResultCode
+import com.carenation.car.apipayload.response.BaseResponse
 import com.carenation.car.port.`in`.usecase.CarUpdateUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -23,10 +24,14 @@ class CarUpdateController(
     fun update(
         @PathVariable @NotNull(message = "Car ID는 필수입니다") id: Long,
         @Valid @RequestBody req: CarUpdateRequest,
-    ): ResponseEntity<Unit> {
+    ): BaseResponse<Unit> {
         // 입력받은 car ID와 CarUpdateRequest를 이용해 CarUpdateInDto로 변환
         val carUpdateInDto = carInMapper.toCarUpdateInDto(id, req)
+        carUpdateUseCase.update(carUpdateInDto)
 
-        return ResponseEntity.ok(carUpdateUseCase.update(carUpdateInDto))
+        return BaseResponse(
+            statusCode = ResultCode.UPDATE_SUCCESS.statusCode,
+            statusMessage = ResultCode.UPDATE_SUCCESS.message,
+        )
     }
 }

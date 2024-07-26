@@ -1,11 +1,13 @@
 package com.carenation.car.port.out
 
 import com.carenation.car.dto.CarCreateInDto
+import org.springframework.stereotype.Repository
 
 /**
  * out port
  */
-interface CarCreateOutPort {
+@Repository
+interface CarCreateRepository {
     // CarEntity 영속화
     fun saveCar(carCreateInDto: CarCreateInDto): Long?
 

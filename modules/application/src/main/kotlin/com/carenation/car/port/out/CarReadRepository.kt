@@ -2,11 +2,13 @@ package com.carenation.car.port.out
 
 import com.carenation.car.application.domain.CarModel
 import com.carenation.car.dto.CarInfoListInDto
+import org.springframework.stereotype.Repository
 
 /**
  * out port
  */
-interface CarReadOutPort {
+@Repository
+interface CarReadRepository {
     // 자동차의 id로 자동차 엔티티를 조회해 CarModel 반환
     fun getById(carId: Long): CarModel
 
@@ -18,10 +20,4 @@ interface CarReadOutPort {
 
     // 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 CarModel 리스트로 반환
     fun getDynamicQuery(req: CarInfoListInDto): List<CarModel>
-
-    // carId로 Car Entity 존재 여부 확인
-    fun existsByCarId(carId: Long): Boolean
-
-    // category로 Category Entity 존재 여부 확인
-    fun existsByCategory(category: String): Boolean
 }
