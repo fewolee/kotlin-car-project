@@ -2,7 +2,6 @@ package com.carenation.car.adapter.`in`.web
 
 import com.carenation.car.adapter.`in`.dto.request.CarCreateRequest
 import com.carenation.car.adapter.`in`.mapper.CarInMapper
-import com.carenation.car.application.domain.CarDetailModel
 import com.carenation.car.port.`in`.usecase.CarCreateUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -26,5 +25,5 @@ class CarCreateController(
     @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
     fun create(
         @Validated @RequestBody req: CarCreateRequest,
-    ): ResponseEntity<CarDetailModel> = ResponseEntity(carCreateUseCase.create(carInMapper.toCarCreateInDto(req)), HttpStatus.CREATED)
+    ): ResponseEntity<Unit> = ResponseEntity(carCreateUseCase.create(carInMapper.toCarCreateInDto(req)), HttpStatus.CREATED)
 }

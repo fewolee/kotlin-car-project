@@ -1,6 +1,5 @@
 package com.carenation.car.port.`in`.usecase
 
-import com.carenation.car.application.domain.CarDetailModel
 import com.carenation.car.dto.CarCreateInDto
 
 /**
@@ -8,5 +7,5 @@ import com.carenation.car.dto.CarCreateInDto
  */
 interface CarCreateUseCase {
     // 자동차 등록
-    fun create(carCreateInDto: CarCreateInDto): CarDetailModel
+    fun create(carCreateInDto: CarCreateInDto)
 }

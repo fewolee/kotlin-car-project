@@ -1,6 +1,5 @@
 package com.carenation.car.service
 
-import com.carenation.car.application.domain.CarDetailModel
 import com.carenation.car.dto.CarCreateInDto
 import com.carenation.car.port.`in`.usecase.CarCreateUseCase
 import com.carenation.car.port.out.CarCreateOutPort
@@ -16,5 +15,8 @@ class CarCreateService(
 ) : CarCreateUseCase {
     // 자동차 생성
     @Transactional
-    override fun create(carCreateInDto: CarCreateInDto): CarDetailModel = carCreateOutPort.create(carCreateInDto)
+    override fun create(carCreateInDto: CarCreateInDto) {
+        val carId = carCreateOutPort.saveCar(carCreateInDto) ?: throw IllegalArgumentException("자동차 ID가 없습니다")
+        carCreateOutPort.saveCarCategory(carCreateInDto.categoryNames, carId)
+    }
 }

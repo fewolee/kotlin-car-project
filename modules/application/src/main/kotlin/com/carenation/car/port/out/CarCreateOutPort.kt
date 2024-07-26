@@ -1,12 +1,17 @@
 package com.carenation.car.port.out
 
-import com.carenation.car.application.domain.CarDetailModel
 import com.carenation.car.dto.CarCreateInDto
 
 /**
  * out port
  */
 interface CarCreateOutPort {
-    // 자동차 생성
-    fun create(carCreateInDto: CarCreateInDto): CarDetailModel
+    // CarEntity 영속화
+    fun saveCar(carCreateInDto: CarCreateInDto): Long?
+
+    // CarCategory 영속화
+    fun saveCarCategory(
+        categoryNames: List<String>,
+        carId: Long,
+    )
 }

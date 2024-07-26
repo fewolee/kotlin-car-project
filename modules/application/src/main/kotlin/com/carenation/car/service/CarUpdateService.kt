@@ -1,6 +1,5 @@
 package com.carenation.car.service
 
-import com.carenation.car.application.domain.CarDetailModel
 import com.carenation.car.dto.CarUpdateInDto
 import com.carenation.car.port.`in`.usecase.CarUpdateUseCase
 import com.carenation.car.port.out.CarUpdateOutPort
@@ -16,5 +15,7 @@ class CarUpdateService(
 ) : CarUpdateUseCase {
     // 자동차 정보 수정
     @Transactional
-    override fun update(carUpdateInDto: CarUpdateInDto): CarDetailModel = carUpdateOutPort.update(carUpdateInDto)
+    override fun update(carUpdateInDto: CarUpdateInDto) {
+        carUpdateOutPort.update(carUpdateInDto)
+    }
 }
