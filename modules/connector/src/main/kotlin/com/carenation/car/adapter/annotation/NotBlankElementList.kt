@@ -1,5 +1,6 @@
-package com.carenation.car.adapter.`in`.util
+package com.carenation.car.adapter.annotation
 
+import com.carenation.car.adapter.validator.NotBlankElementListValidator
 import jakarta.validation.Constraint
 import kotlin.reflect.KClass
 
@@ -12,4 +13,5 @@ import kotlin.reflect.KClass
 annotation class NotBlankElementList(
     val message: String = "리스트 안에 빈 값이 존재합니다.",
     val groups: Array<KClass<*>> = [],
-    val payload: Array<KClass<*>> = [],)
+    val payload: Array<KClass<*>> = [],
+)

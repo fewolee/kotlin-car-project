@@ -37,9 +37,6 @@ dependencies {
 
     // lib
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("org.springframework.boot:spring-boot-starter")
     runtimeOnly("com.mysql:mysql-connector-j")
     // QueryDSL 의존성 추가
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")

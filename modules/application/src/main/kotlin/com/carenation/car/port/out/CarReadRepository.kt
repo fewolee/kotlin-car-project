@@ -1,12 +1,14 @@
-package com.carenation.car.port.`in`.usecase
+package com.carenation.car.port.out
 
 import com.carenation.car.application.domain.CarModel
 import com.carenation.car.dto.CarInfoListInDto
+import org.springframework.stereotype.Repository
 
 /**
- * input port
+ * out port
  */
-interface CarReadUseCase {
+@Repository
+interface CarReadRepository {
     // 자동차의 id로 자동차 엔티티를 조회해 CarModel 반환
     fun getById(carId: Long): CarModel
 
