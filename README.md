@@ -52,19 +52,18 @@
 - Hexagonal Architecture + Multi Module 아키텍처 사용
 - bootstrap module
     
-    :  스프링 부트 실행에 필요한 코드만 존재
+    :  애플리케이션의 부팅 전용
     
     나머지 domain, application, adapter-data-jpa, connector 모듈 의존
     
 - domain module
     
-    : 핵심 도메인인 Car 관련 Dto들만 존재
+    : 애플리케이션의 핵심 도메인 모델 정의
     
-    kotlin(”jvm”) 플러그인 이외 다른 의존성 없음
     
 - application module
     
-    : Application 단에서 필요한 Port in, out 인터페이스와 구현체인 CarService 존재
+    : 애플리케이션의 비지니스 로직 담당 및 외부와의 인터페이스
     
     domain 모듈을 의존하고 기본적인 spring boot 어노테이션을 띄우기 위한
     
@@ -72,13 +71,13 @@
     
 - adapter-data-jpa module
     
-    :  db 작업을 위한 설정 및 jpa를 사용하는 Entity 클래스. mapper, repository, querydsl 관련 설정 클래스 , port out 인터페이스를 구현한 adapter 클래스 존재
+    :  데이터베이스 접근 및 영속성 처리 담당
     
     application, domain 모듈 의존
     
 - connector module
     
-    : in adapter인 컨트롤러단 클래스 , mapper, 스웨거와 Request Dto 클래스 존재
+    : 외부와의 통신 담당
     
     관련 spring boot web, vaildation 과 mapstruct 관련 dependency 의존
     
@@ -89,7 +88,7 @@
 ## 구현 과정
 
 - 엔티티 : 자동차는 한 개 이상의 카테고리를 가질 수 있고 하나의 카테고리도 여러개의 자동차를 가질 수 있기 떄문에 N:M 관계, CarCategory라는 중간 매핑 엔티티로 구현하여 1:N , M:1 관계 설정
-- Validation : 컨트롤러 단과 컨트롤러로 들어오는 Dto를 spring- validation을 이용하여 유효성 검사
+- Validation : 컨트롤러로 들어오는 Dto를 spring- validation을 이용하여 유효성 검사
 
 ```kotlin
 /**
@@ -113,15 +112,26 @@ data class CreateCarRequest (
     val categoryNames: List<String> // 자동차 카테고리
 )
 
-// 자동차 등록
+ // 자동차 등록
     @PostMapping
     @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
-    fun create(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CarCreateOutDto> {
-
-        return ResponseEntity(carCreateUseCase.create(carInMapper.toCarAllInfo(createCarRequest)), HttpStatus.CREATED)
+    fun create(
+        @Validated @RequestBody req: CarCreateRequest,
+    ): BaseResponse<Unit> {
+        carCreateUseCase.create(carInMapper.toCarCreateInDto(req))
+        return BaseResponse(
+            statusCode = ResultCode.CREATE_SUCCESS.statusCode,
+            statusMessage = ResultCode.CREATE_SUCCESS.message,
+        )
     }
-}
+
 ```
+
+실패 시 화면
+
+![image](https://github.com/user-attachments/assets/834d0868-0e1a-49e2-b549-1d41ea901b5c)
+
+
 
 - Mapstruct :  Entity ↔ Dto, Dto ↔ Dto 간 매핑을 위해 mapstruct를 사용하여 매핑
 
@@ -145,135 +155,65 @@ interface CarInMapper {
     //carInfoListRequest를 CarInfoListInDto로 변환
     fun toCarInfoListInDto(carInfoListRequest: CarInfoListRequest) : CarInfoListInDto
 }
-
-// 자동차 등록
-    @PostMapping
-    @Operation(summary = "자동차를 생성하는 API입니다", description = "자동차의 정보들을 입력받아 자동차를 생성합니다")
-    fun create(@Valid @RequestBody createCarRequest: CreateCarRequest): ResponseEntity<CarCreateOutDto> {
-
-        return ResponseEntity(carCreateUseCase.create(carInMapper.toCarAllInfo(createCarRequest)), HttpStatus.CREATED)
-    }  
     
 ```
 
 ---
 
-- Querydsl : 조회 성능을 높이기 위해 jpa 방식이 아닌 Querydsl의 쿼리 팩토리 사용, 동적으로 정보를 조회하기 위해 booleanexpression으로 함수화 해서 조건문 사용
+- Querydsl : 조회 성능을 높이기 위해 jpa 방식이 아닌 Queryds 사용, 동적으로 정보를 조회하기 위해 booleanexpression으로 함수화 해서 조건문 사용, 중복되는 constructor 코드는 Util 클래스로 분리 
 
 ```kotlin
-
-/**
- * CarQuerydslRepository 인터페이스의 구현체
- */
-@Service
-class CarQuerydslRepositoryImpl(
+@Component
+class CarReadRepositoryImpl(
     private val queryFactory: JPAQueryFactory,
-    private val categoryRepository: CategoryRepository
-) : CarQuerydslRepository {
-
+    private val carReadRepositoryUtil: CarReadRepositoryUtil,
+) : CarReadRepository {
     /**
-     * 자동차의 id로 자동차 엔티티를 조회해 CarInfoDto로 반환
+     * 자동차의 id로 자동차 엔티티를 조회해 CarModel 반환
      * @param carId
-     * @return CarInfoDto
+     * @return CarModel
      */
-    override fun getById(carId: Long): CarInfoDto {
 
-        return queryFactory.select(
-            Projections.constructor(
-                CarInfoDto::class.java,
-                carEntity.modelName,
-                carEntity.manufacture,
-                carEntity.productionYear,
-                carEntity.rentAvailable
-            )
-        )
+    override fun getById(carId: Long): CarModel =
+        queryFactory
+            .select(carReadRepositoryUtil.ceCarModel())
             .from(carEntity)
             .where(carEntity.id.eq(carId))
             .fetchOne()
             ?: throw IllegalArgumentException("자동차 ID $carId 이 없습니다")
 
-    }
-
     /**
-     * 모든 자동차를 조회해 List<CarInfoDto>로 반환
-     * @return List<CarInfoDto>
+     * 모든 자동차를 조회해 List<CarModel>로 반환
+     * @return List<CarModel>
      */
-    override fun getAll(): List<CarInfoDto> {
-        return queryFactory.select(
-            Projections.constructor(
-                CarInfoDto::class.java,
-                carEntity.modelName,
-                carEntity.manufacture,
-                carEntity.productionYear,
-                carEntity.rentAvailable
-            )
-        )
+    override fun getAll(): List<CarModel> =
+        queryFactory
+            .select(carReadRepositoryUtil.ceCarModel())
             .from(carEntity)
             .fetch()
-    }
 
-    /**
-     * 카테고리 이름으로 자동차 엔티티를 조회해 List<CarInfoDto>로 반환
-     * @param category
-     * @return List<CarInfoDto>
-     */
-    override fun getByCategoryName(category: String): List<CarInfoDto> {
-        val categoryEntity = categoryRepository.findByCategoryName(category)
-            ?: throw IllegalArgumentException("카테고리 이름이 없습니다: $category")
+```
 
-        return queryFactory.select(
-            Projections.constructor(
-                CarInfoDto::class.java,
-                carEntity.modelName,
-                carEntity.manufacture,
-                carEntity.productionYear,
-                carEntity.rentAvailable
-            )
+```kotlin
+@Component
+class CarReadRepositoryUtil {
+    fun ceCarModel(): ConstructorExpression<CarModel> =
+        Projections.constructor(
+            CarModel::class.java,
+            carEntity.modelName,
+            carEntity.manufacture,
+            carEntity.productionYear,
+            carEntity.rentAvailable,
         )
-            .from(carEntity)
-            .join(carCategoryEntity).on(carEntity.id.eq(carCategoryEntity.carEntity.id))
-            .where(carCategoryEntity.categoryEntity.id.eq(categoryEntity.id))
-            .fetch()
-    }
 
-    /**
-     * 모델명, 제조사, 생상년도로 동적으로 자동차를 조회해 List<CarInfoDto>로 반환
-     * @param CarInfoListInDto
-     * @return List<CarInfoDto>
-     */
-    override fun getDynamicQuery(req: CarInfoListInDto): List<CarInfoDto> {
-        return queryFactory.select(
-            Projections.constructor(
-                CarInfoDto::class.java,
-                carEntity.modelName,
-                carEntity.manufacture,
-                carEntity.productionYear,
-                carEntity.rentAvailable
-            )
+    fun ceCategoryModel(): ConstructorExpression<CategoryModel> =
+        Projections.constructor(
+            CategoryModel::class.java,
+            categoryEntity.id,
+            categoryEntity.categoryName,
         )
-            .from(carEntity)
-            .where(eqModelName(req.modelName),
-                eqManufacture(req.manufacture),
-                eqProductionYear(req.productionYear))
-            .fetch()
-    }
-
-    // 모델명이 같은지 확인
-    private fun eqModelName(modelName: String?): BooleanExpression? {
-        return if (StringUtils.isNullOrEmpty(modelName)) null else carEntity.modelName.eq(modelName)
-    }
-
-    // 제조사가 같은지 확인
-    private fun eqManufacture(manufacture: String?): BooleanExpression? {
-        return if (StringUtils.isNullOrEmpty(manufacture)) null else carEntity.manufacture.eq(manufacture)
-    }
-
-    // 생산년도가 같은지 확인
-    private fun eqProductionYear(productionYear: Int?): BooleanExpression? {
-        return if (productionYear == null ) null else carEntity.productionYear.eq(productionYear)
-    }
-
 }
+
 ```
 ---
 
@@ -294,41 +234,49 @@ ex) CarCreateController,  CarCreateRequest ,
     
     : 모델명, 제조사, 생산년도, 대여 가능 여부, 카테고리 정보를 받아 자동차 생성 후
     
-     생성된 정보 반환
+     상태코드 , 메세지, 생성 시간 응답
   
-![image](https://github.com/user-attachments/assets/a3e3a693-f3ee-4746-899e-afc5f4853210)
+  ![image](https://github.com/user-attachments/assets/072fac7c-3b6b-43c7-a902-1972dd06fff7)
+
 
     
 - 수정 관련 api
 
-: 수정할 자동차의 id, 정보들을 받아 자동차 수정
+: 수정할 자동차의 id, 정보들을 받아 자동차 수정 후
+상태코드, 메세지, 수정 시간 응답
 
-![image](https://github.com/user-attachments/assets/ae67d957-84fd-4f98-95ce-f1715078f73c)
+![image](https://github.com/user-attachments/assets/cf5fce8e-9910-4888-accb-2c5631abeeb0)
+
 
 
 - 삭제 관련 api
 
-: 삭제할 자동차의 id를 받아 자동차 삭제
+: 삭제할 자동차의 id를 받아 자동차 삭제 후
+ 상태코드, 메세지, 삭제 시간 응답
 
-![image](https://github.com/user-attachments/assets/f5d7c20d-35a0-4e07-8eba-1722c4add824)
+![image](https://github.com/user-attachments/assets/3c5b62a2-1555-48ce-99c4-14e3b0e427f7)
 
 
-- 조회 관련 api
-- 자동차 id로 단건 정보 조회
 
-![image](https://github.com/user-attachments/assets/881e4710-fd11-4725-a7f0-864979466795)
+- 조회 관련 api : 정보 조회 후 상태코드, 메세지, 시간과 조회 정보 반환
 
+- 자동차 정보 단건 조회
+- 
+![image](https://github.com/user-attachments/assets/93c010e2-79ab-44d9-9213-7b8fe9b0ae58)
 
 - 모든 자동차 정보 조회
 
-![image](https://github.com/user-attachments/assets/f87b4e35-7237-454d-95d0-6d48c10ff629)
+![image](https://github.com/user-attachments/assets/74a49a30-50ce-42af-b8e6-8ec82507519b)
+
 
 
 - 카테고리 이름으로 자동차 정보 조회
 
-![image](https://github.com/user-attachments/assets/52349ae5-9118-4540-b5c3-4427e18434a9)
+![image](https://github.com/user-attachments/assets/d4f40d0d-92dc-46c4-9370-335a5544451c)
+
 
 
 - 제조사, 모델명, 생산년도로 자동차 정보 조회
 
-![image](https://github.com/user-attachments/assets/8bb1b9de-2e57-4bcc-9136-6e8542ed16bd)
+![image](https://github.com/user-attachments/assets/33c7085c-bb60-48fb-bc9f-b4c37239f5fc)
+
