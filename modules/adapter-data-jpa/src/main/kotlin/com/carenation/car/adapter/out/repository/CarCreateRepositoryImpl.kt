@@ -2,7 +2,6 @@ package com.carenation.car.adapter.out.repository
 
 import com.carenation.car.adapter.out.persistence.entity.CarCategoryEntity
 import com.carenation.car.adapter.out.persistence.entity.CarEntity
-import com.carenation.car.adapter.out.persistence.entity.QCarEntity.carEntity
 import com.carenation.car.dto.CarCreateInDto
 import com.carenation.car.port.out.CarCreateRepository
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -45,13 +44,7 @@ class CarCreateRepositoryImpl(
         categoryNames: List<String>,
         carId: Long,
     ) {
-        val car =
-            queryFactory
-                .select(carEntity)
-                .from(carEntity)
-                .where(carEntity.id.eq(carId))
-                .fetchOne()
-                ?: throw IllegalArgumentException("존재하는 자동차 ID $carId 이 없습니다")
+        val car = carReadRepository.getCarEntityByCarId(carId)
 
         categoryNames.forEach { category ->
             val categoryName = carReadRepository.getCategoryModelByCategoryName(category).categoryName
